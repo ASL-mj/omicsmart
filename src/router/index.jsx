@@ -1,6 +1,8 @@
 import { Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import AnalysisPlatformPage from '../pages/AnalysisPlatformPage';
+import PlatformDetailPage from '../pages/AnalysisPlatform';
+import SingleCellInteractiveAnalysis from '../pages/InteractiveAnalysis/SingleCellPlatform';
 
 // 路由配置
 export const routes = [
@@ -15,6 +17,10 @@ export const routes = [
       {
         path: 'analysis',
         element: <AnalysisPlatformPage />,
+      },
+      {
+        path: 'analysis/:id',
+        element: <PlatformDetailPage />,
       },
       {
         path: 'project-progress',
@@ -75,5 +81,10 @@ export const routes = [
         element: <Navigate to="/analysis" replace />,
       },
     ],
+  },
+  // 结果交互分析页面 - 独立路由，不使用MainLayout
+  {
+    path: '/interactive-analysis/single-cell',
+    element: <SingleCellInteractiveAnalysis />,
   },
 ];

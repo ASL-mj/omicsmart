@@ -1,0 +1,188 @@
+/* 平台详情页面样式 */
+.platformDetailPage {
+}
+
+.platformDetailCard {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+/* 关闭按钮 */
+.closeIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.closeIcon:hover {
+  color: #666;
+}
+
+/* 介绍区域 - 左右布局 */
+.introduce {
+  display: flex;
+  align-items: stretch;
+  max-height: 220px;
+}
+
+/* 左侧Logo容器 - 30%宽度 */
+.logoContainer {
+  flex: 0 0 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 1px solid #d9d9d9; /* 竖线分隔 */
+  padding-right: 20px;
+}
+
+.logoContainer :global(.logo-img) {
+  width: 95%;
+  height: 95%;
+  border: 1px solid #d0d0d0;
+}
+
+/* 右侧内容容器 - 70%宽度 */
+.passageContainer {
+  flex: 0 0 70%;
+  padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* 标题部分 */
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1890ff;
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 介绍部分 - 最大高度250px，超出显示省略 */
+.introduction {
+  flex: 1;
+  max-height: 250px;
+  text-indent: 2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 10; /* 最多显示10行 */
+  -webkit-box-orient: vertical;
+  color: #666;
+  font-size: 14px;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* 按钮部分 */
+.btnBar {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btnSpan {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+/* 第一个按钮 - 纯分析按钮 */
+.btnSpan1 {
+  background: #ff7a45;
+  color: white;
+  border: 1px solid #ff7a45;
+}
+
+.btnSpan1:hover {
+  background: #ff9c6e;
+  border-color: #ff9c6e;
+}
+
+/* 第二个按钮 - 进入结果交互分析（必有） */
+.btnSpan2 {
+  background: white;
+  color: #666;
+  border: 1px solid #d9d9d9;
+}
+
+.btnSpan2:hover {
+  color: #1890ff;
+  border-color: #1890ff;
+}
+
+/* 第三个按钮 - 进入流程 */
+.btnSpan3 {
+  background: white;
+  color: #666;
+  border: 1px solid #d9d9d9;
+}
+
+.btnSpan3:hover {
+  color: #1890ff;
+  border-color: #1890ff;
+}
+
+/* Tab标签区域 */
+.platformTabsWrapper {
+  margin-top: 30px;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20px;
+}
+
+.platformTabs :global(.ant-tabs-nav) {
+  margin-bottom: 20px;
+}
+
+.platformTabs :global(.ant-tabs-tab) {
+  font-size: 15px;
+  padding: 8px 16px;
+}
+
+.platformTabs :global(.ant-tabs-tab-active) {
+  color: #1890ff;
+}
+
+.tabContent {
+  padding: 20px 0;
+}
+
+.featureSection {
+  margin-bottom: 30px;
+}
+
+.featureSection:last-child {
+  margin-bottom: 0;
+}
+
+.featureSection :global(.ant-typography-title) {
+  margin-bottom: 12px !important;
+}
+
+.featureSection :global(.ant-typography) {
+  color: #666;
+  line-height: 1.8;
+  font-size: 14px;
+}

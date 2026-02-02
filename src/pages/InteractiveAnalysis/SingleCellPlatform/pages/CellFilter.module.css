@@ -1,0 +1,13 @@
+.cellFilter {
+  padding: 0;
+}
+
+.ruleCard {
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s;
+}
+
+.ruleCard:hover {
+  border-color: #1890ff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
+}
