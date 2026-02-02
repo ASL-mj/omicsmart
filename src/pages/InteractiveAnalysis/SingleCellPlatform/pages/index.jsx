@@ -1,120 +1,66 @@
 // 导出所有页面组件
 export { default as ReportNavigation } from './ReportNavigation';
 export { default as GroupScheme } from './GroupScheme';
-
-// 其他页面组件将在后续开发中添加
-// 目前使用PageTemplate作为占位符
-import PageTemplate from './PageTemplate';
-
-// 细胞集筛选
-export const ProcessCellFilter = () => <PageTemplate title="流程细胞集筛选" />;
-export const TargetCellFilter = () => <PageTemplate title="目标细胞集筛选" />;
-
-// 基因集筛选
-export const ClusterGeneFilter = () => <PageTemplate title="聚类基因集筛选" />;
-export const TargetGeneFilter = () => <PageTemplate title="目标基因集筛选" />;
-
-// 细胞质控总览
-export const CellQCOverview = () => <PageTemplate title="细胞质控总览" />;
-
-// 细胞亚群分类分析
-export const CellFrequencyStats = () => <PageTemplate title="细胞频率统计" />;
-export const ClassificationTSNE = () => <PageTemplate title="分类t-SNE图" />;
-export const ClassificationUMAP = () => <PageTemplate title="分类UMAP图" />;
-export const CellFrequencyDiff = () => <PageTemplate title="细胞频率差异" />;
-
-// 亚群marker基因分析
-export const SubgroupMarkerAnalysis = () => <PageTemplate title="亚群marker基因分析" />;
-
-// 亚群上调基因分析
-export const UpregulatedStatsBar = () => <PageTemplate title="亚群上调统计柱状图" />;
-export const UpregulatedGeneDistribution = () => <PageTemplate title="亚群上调基因分布" />;
-export const UpregulatedGOEnrichment = () => <PageTemplate title="上调差异基因GO富集" />;
-export const UpregulatedKEGGEnrichment = () => <PageTemplate title="上调差异基因KEGG富集" />;
-
-// 细胞注释分析
-export const CellAnnotationAnalysis = () => <PageTemplate title="细胞注释分析" />;
-
-// 拟时分析 - Monocle2
-export const Monocle2Trajectory = () => <PageTemplate title="细胞轨迹图" />;
-export const Monocle2PseudotimeDEG = () => <PageTemplate title="拟时间轴差异基因" />;
-export const Monocle2StateDEG = () => <PageTemplate title="分化状态差异基因" />;
-export const Monocle2FateDEG = () => <PageTemplate title="分化命运差异基因" />;
-export const Monocle2Mapping = () => <PageTemplate title="Monocle2映射图" />;
-
-// 拟时分析 - Monocle3
-export const Monocle3DimensionReduction = () => <PageTemplate title="Monocle3降维图" />;
-export const Monocle3PseudotimeTrajectory = () => <PageTemplate title="拟时间值轨迹图" />;
-export const Monocle3Mapping = () => <PageTemplate title="Monocle3映射图" />;
-
-// 拟时分析 - PAGA
-export const PAGAScatter = () => <PageTemplate title="分化散点图" />;
-export const PAGAGrid = () => <PageTemplate title="分化网格图" />;
-export const PAGAFeatureVisualization = () => <PageTemplate title="特征基因可视化" />;
-export const PAGAPseudotimeDEG = () => <PageTemplate title="拟时间轴差异基因" />;
-
-// 拟时分析 - Slingshot
-export const SlingshotDimensionReduction = () => <PageTemplate title="Slingshot降维图" />;
-export const SlingshotPseudotimeTrajectory = () => <PageTemplate title="拟时间值轨迹图" />;
-export const SlingshotMapping = () => <PageTemplate title="拟时间映射图" />;
-
-// 拟时分析 - Cytotrace
-export const CytotraceDifferentiationAssessment = () => <PageTemplate title="分化评估" />;
-export const CytotraceDifferentiationMapping = () => <PageTemplate title="分化水平映射图" />;
-
-// 细胞通讯分析
-export const CellInteractionAnalysis = () => <PageTemplate title="细胞互作分析" />;
-export const LigandReceptorPairAnalysis = () => <PageTemplate title="配受体对分析" />;
-export const GeneSetCellPairInteraction = () => <PageTemplate title="基因集细胞对互作" />;
-export const GeneSetLigandReceptorInteraction = () => <PageTemplate title="基因集配受体对互作" />;
-export const CellPairLevelDiff = () => <PageTemplate title="细胞对水平差异" />;
-export const LigandReceptorLevelDiff = () => <PageTemplate title="配受体对水平差异" />;
-export const GeneSetLevelDiff = () => <PageTemplate title="基因集水平差异" />;
-
-// 转录因子分析
-export const TFGeneStats = () => <PageTemplate title="TF-gene统计" />;
-export const RegulonsActivityDimensionReduction = () => <PageTemplate title="Regulons活性降维" />;
-export const RegulonsActivityFeature = () => <PageTemplate title="Regulons活性特征" />;
-export const RegulonsOpennessFeature = () => <PageTemplate title="Regulons开放性特征" />;
-export const RegulonsExpressionFeature = () => <PageTemplate title="Regulons表达量特征" />;
-export const TFGeneInteractionNetwork = () => <PageTemplate title="TF-gene互作网络" />;
-
-// 组间差异分析
-export const DEGStats = () => <PageTemplate title="差异基因统计" />;
-export const DEGDistribution = () => <PageTemplate title="差异基因分布" />;
-export const DEGGOEnrichment = () => <PageTemplate title="差异基因GO富集" />;
-export const DEGKEGGEnrichment = () => <PageTemplate title="差异基因KEGG富集" />;
-export const GSEAAnalysis = () => <PageTemplate title="GSEA分析" />;
-
-// 基因集打分分析
-export const GeneSetClassification = () => <PageTemplate title="基因集分类" />;
-export const PositiveCellAnalysis = () => <PageTemplate title="阳性细胞分析" />;
-export const GeneSetAssessment = () => <PageTemplate title="基因集评估" />;
-export const GeneDistributionInSet = () => <PageTemplate title="基因集中基因分布" />;
-export const GeneSetScoreDiff = () => <PageTemplate title="基因集评分差异" />;
-
-// 目标基因分析
-export const TargetGeneVenn = () => <PageTemplate title="目标基因韦恩图" />;
-export const TargetGeneGOEnrichment = () => <PageTemplate title="目标基因GO富集" />;
-export const TargetGeneKEGGEnrichment = () => <PageTemplate title="目标基因KEGG富集" />;
-
-// 数据库分析
-export const TCGAAnalysis = () => <PageTemplate title="TCGA分析" />;
-
-// 基因查询
-export const SubgroupTask = () => <PageTemplate title="亚群类任务" />;
-export const GroupDiffTask = () => <PageTemplate title="组间差异任务" />;
-
-// 其他
-export const GraphComparison = () => <PageTemplate title="图形比较" />;
-export const TaskOverview = () => <PageTemplate title="任务总览" />;
-export const AnalysisReport = () => <PageTemplate title="分析报告" />;
-export const CustomColorScheme = () => <PageTemplate title="个性配色方案" />;
-
-// 专属Omicshare
-export const MyClassroom = () => <PageTemplate title="我的课堂" />;
-export const MyTools = () => <PageTemplate title="我的工具" />;
-export const MyKnowledgeBase = () => <PageTemplate title="我的知识库" />;
-
-// 建议与反馈
-export const Feedback = () => <PageTemplate title="建议与反馈" />;
+export { default as ProcessCellFilter } from './CellFilter/ProcessCellFilter';
+export { default as TargetCellFilter } from './CellFilter/TargetCellFilter';
+export { default as ClusterGeneFilter } from './GeneSetFilter/ClusterGeneFilter';
+export { default as TargetGeneFilter } from './GeneSetFilter/TargetGeneFilter';
+export { default as CellQCOverview } from './CellQCOverview';
+export { default as CellFrequencyStats } from './CellSubgroupAnalysis/CellFrequencyStats';
+export { default as ClassificationTSNE } from './CellSubgroupAnalysis/ClassificationTSNE';
+export { default as ClassificationUMAP } from './CellSubgroupAnalysis/ClassificationUMAP';
+export { default as CellFrequencyDiff } from './CellSubgroupAnalysis/CellFrequencyDiff';
+export { default as SubgroupMarkerAnalysis } from './SubgroupMarkerAnalysis';
+export { default as UpregulatedStatsBar } from './SubgroupUpregulatedAnalysis/UpregulatedStatsBar';
+export { default as UpregulatedGeneDistribution } from './SubgroupUpregulatedAnalysis/UpregulatedGeneDistribution';
+export { default as UpregulatedGOEnrichment } from './SubgroupUpregulatedAnalysis/UpregulatedGOEnrichment';
+export { default as UpregulatedKEGGEnrichment } from './SubgroupUpregulatedAnalysis/UpregulatedKEGGEnrichment';
+export { default as CellAnnotationAnalysis } from './CellAnnotationAnalysis';
+export { default as CellInteractionAnalysis } from './CellCommunicationAnalysis/CellInteractionAnalysis';
+export { default as CellPairLevelDiff } from './CellCommunicationAnalysis/CellPairLevelDiff';
+export { default as GeneSetCellPairInteraction } from './CellCommunicationAnalysis/GeneSetCellPairInteraction';
+export { default as GeneSetLigandReceptorInteraction } from './CellCommunicationAnalysis/GeneSetLigandReceptorInteraction';
+export { default as GeneSetLevelDiff } from './CellCommunicationAnalysis/GeneSetLevelDiff';
+export { default as LigandReceptorLevelDiff } from './CellCommunicationAnalysis/LigandReceptorLevelDiff';
+export { default as LigandReceptorPairAnalysis } from './CellCommunicationAnalysis/LigandReceptorPairAnalysis';
+export { default as AnalysisReport } from './AnalysisReport';
+export { default as TaskOverview } from './TaskOverview';
+export { default as GeneQuerySubgroup } from './GeneQuery/SubgroupTask';
+export { default as GeneQueryGroupDiff } from './GeneQuery/GroupDiffTask';
+export { default as GeneSetAssessment } from './GeneSetScoringAnalysis/GeneSetAssessment';
+export { default as GeneSetClassification } from './GeneSetScoringAnalysis/GeneSetClassification';
+export { default as GeneSetScoreDiff } from './GeneSetScoringAnalysis/GeneSetScoreDiff';
+export { default as GeneDistributionInSet } from './GeneSetScoringAnalysis/GeneDistributionInSet';
+export { default as PositiveCellAnalysis } from './GeneSetScoringAnalysis/PositiveCellAnalysis';
+export { default as CytotraceDifferentiationAssessment } from './PseudotimeAnalysis/Cytotrace/CytotraceDifferentiationAssessment.jsx';
+export { default as CytotraceDifferentiationMapping } from './PseudotimeAnalysis/Cytotrace/CytotraceDifferentiationMapping.jsx';
+export { default as Monocle2Trajectory } from './PseudotimeAnalysis/Monocle2/Monocle2Trajectory';
+export { default as Monocle2PseudotimeDEG } from './PseudotimeAnalysis/Monocle2/Monocle2PseudotimeDEG';
+export { default as Monocle2StateDEG } from './PseudotimeAnalysis/Monocle2/Monocle2StateDEG';
+export { default as Monocle2FateDEG } from './PseudotimeAnalysis/Monocle2/Monocle2FateDEG';
+export { default as Monocle2Mapping } from './PseudotimeAnalysis/Monocle2/Monocle2Mapping';
+export { default as Monocle3DimensionReduction } from './PseudotimeAnalysis/Monocle3/Monocle3DimensionReduction';
+export { default as Monocle3PseudotimeTrajectory } from './PseudotimeAnalysis/Monocle3/Monocle3PseudotimeTrajectory';
+export { default as Monocle3Mapping } from './PseudotimeAnalysis/Monocle3/Monocle3Mapping';
+export { default as PAGAScatter } from './PseudotimeAnalysis/PAGA/PAGAScatter';
+export { default as PAGAGrid } from './PseudotimeAnalysis/PAGA/PAGAGrid';
+export { default as PAGAPseudotimeDEG } from './PseudotimeAnalysis/PAGA/PAGAPseudotimeDEG';
+export { default as PAGAFeatureVisualization } from './PseudotimeAnalysis/PAGA/PAGAFeatureVisualization';
+export { default as SlingshotDimensionReduction } from './PseudotimeAnalysis/Slingshot/SlingshotDimensionReduction.jsx';
+export { default as SlingshotMapping } from './PseudotimeAnalysis/Slingshot/SlingshotMapping.jsx';
+export { default as SlingshotPseudotimeTrajectory } from './PseudotimeAnalysis/Slingshot/SlingshotPseudotimeTrajectory.jsx';
+export { default as DEGDistribution } from './GroupDiffAnalysis/DEGDistribution';
+export { default as DEGGOEnrichment } from './GroupDiffAnalysis/DEGGOEnrichment';
+export { default as DEGKEGGEnrichment } from './GroupDiffAnalysis/DEGKEGGEnrichment';
+export { default as DEGStats } from './GroupDiffAnalysis/DEGStats';
+export { default as GSEAAnalysis } from './GroupDiffAnalysis/GSEAAnalysis';
+export { default as TargetGeneGOEnrichment } from './TargetGeneAnalysis/TargetGeneGOEnrichment';
+export { default as TargetGeneKEGGEnrichment } from './TargetGeneAnalysis/TargetGeneKEGGEnrichment';
+export { default as TargetGeneVenn } from './TargetGeneAnalysis/TargetGeneVenn';
+export { default as TCGAAnalysis } from './DatabaseAnalysis/TCGAAnalysis';
+export { default as CustomColorScheme } from './CustomColorScheme';
+export { default as GraphComparison } from './GraphComparison';
+export { default as Feedback } from './Feedback';
+export { default as MyClassroom } from './ExclusiveOmicshare/MyClassroom';
+export { default as MyKnowledgeBase } from './ExclusiveOmicshare/MyKnowledgeBase';
+export { default as MyTools } from './ExclusiveOmicshare/MyTools';

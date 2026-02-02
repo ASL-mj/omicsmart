@@ -2,7 +2,7 @@ import { Navigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import AnalysisPlatformPage from '../pages/AnalysisPlatformPage';
 import PlatformDetailPage from '../pages/AnalysisPlatform';
-import SingleCellInteractiveAnalysis from '../pages/InteractiveAnalysis/SingleCellPlatform';
+import SingleCellInteractiveAnalysis from '../pages/InteractiveAnalysis/SingleCellPlatform/index.jsx';
 
 // 路由配置
 export const routes = [

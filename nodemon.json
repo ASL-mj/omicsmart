@@ -1,0 +1,9 @@
+{
+  "watch": ["mock"],
+  "ext": "js,json",
+  "ignore": ["mock/db.json"],
+  "exec": "node mock/server.js",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

@@ -140,11 +140,18 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
 
     const selectedItem = findNavItem(navigationConfig, key);
     
-    // 如果选中的是有子项的一级导航，跳转到第一个子项
+    // 如果选中的是有子项的导航，递归找到最深层的第一个叶子节点
+    const findFirstLeaf = (item) => {
+      if (!item.children || item.children.length === 0) {
+        return item;
+      }
+      return findFirstLeaf(item.children[0]);
+    };
+    
     if (selectedItem?.children && selectedItem.children.length > 0) {
-      const firstChild = selectedItem.children[0];
+      const firstLeaf = findFirstLeaf(selectedItem);
       if (onPageChange) {
-        onPageChange(firstChild.key);
+        onPageChange(firstLeaf.key);
       }
     } else {
       // 否则直接跳转到选中的页面
@@ -189,8 +196,38 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
 
   // 处理顶部Tab切换
   const handleTabChange = (key) => {
-    if (onPageChange) {
-      onPageChange(key);
+    // 查找选中的导航项
+    const findNavItem = (items, targetKey) => {
+      for (const item of items) {
+        if (item.key === targetKey) return item;
+        if (item.children) {
+          const found = findNavItem(item.children, targetKey);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+
+    const selectedItem = findNavItem(navigationConfig, key);
+    
+    // 如果选中的是有子项的导航，递归找到最深层的第一个叶子节点
+    const findFirstLeaf = (item) => {
+      if (!item.children || item.children.length === 0) {
+        return item;
+      }
+      return findFirstLeaf(item.children[0]);
+    };
+    
+    if (selectedItem?.children && selectedItem.children.length > 0) {
+      const firstLeaf = findFirstLeaf(selectedItem);
+      if (onPageChange) {
+        onPageChange(firstLeaf.key);
+      }
+    } else {
+      // 否则直接跳转到选中的页面
+      if (onPageChange) {
+        onPageChange(key);
+      }
     }
   };
 
@@ -235,19 +272,21 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
             />
           </div>
           
-          {/* 导航菜单 */}
-          <Menu
-            mode="inline"
-            selectedKeys={[selectedKey]}
-            items={sidebarMenuItems}
-            onClick={handleMenuSelect}
-            className={styles.sidebarMenu}
-            defaultOpenKeys={searchResults ? sidebarMenuItems.map(item => item.key) : []}
-          />
+          {/* 导航菜单容器 */}
+          <div className={styles.menuContainer}>
+            <Menu
+              mode="inline"
+              selectedKeys={[currentNavInfo.firstLevel?.key]}
+              items={sidebarMenuItems}
+              onClick={handleMenuSelect}
+              className={styles.sidebarMenu}
+              defaultOpenKeys={searchResults ? sidebarMenuItems.map(item => item.key) : []}
+            />
+          </div>
         </Sider>
 
         {/* 右侧主内容区 */}
-        <Layout className={styles.mainContent}>
+        <Layout className={styles.mainContent} >
           <Content className={styles.contentWrapper}>
             {/* 顶部二级三级导航Tab */}
             {topTabItems.length > 0 && (

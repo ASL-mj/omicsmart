@@ -1,0 +1,563 @@
+.reportNavigation {
+  padding: 0;
+}
+
+.header {
+  margin-bottom: 32px;
+}
+
+.header h2 {
+  margin-bottom: 8px;
+  color: #262626;
+}
+
+.header p {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.sectionCard {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.sectionCard :global(.ant-card-head) {
+  background: #fafafa;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.navCard {
+  text-align: center;
+  border-radius: 8px;
+  transition: all 0.3s;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navCardTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #262626;
+  text-align: center;
+  display: block;
+}
+
+/* 新增样式来自navigation.css */
+.navigateTop {
+  width: 100%;
+  height: 214px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(48, 49, 51, 0.384);
+  border-radius: 4px;
+  background: url(@/assets/image/backgroundImg/文章引用bg.png) center center / cover no-repeat;
+}
+
+.navigateTitle1 {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+.navigateTitle1Text {
+  font-size: 28px;
+  font-weight: 700;
+  color: #409fff;
+}
+
+.navigateTitle2 {
+  line-height: 24px;
+  text-align: left;
+}
+
+.navigateTitle2Text {
+  color: #409fff;
+}
+
+.navigateTitle2P1 {
+  font-weight: 700;
+}
+
+.navigateTitle2P2, .navigateTitle2P3 {
+  box-sizing: border-box;
+}
+
+.navigateProcess {
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background: #f0f4fb;
+  margin-bottom: 20px;
+  padding: 14px;
+  gap: 14px;
+}
+
+.navigateProcessTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navigateProcessTitleImg {
+  box-sizing: border-box;
+}
+
+.navigateProcessTitleWord {
+  color: #606266;
+  font-size: 14px;
+  margin-left: 14px;
+}
+
+.navigateProcessCenter {
+  height: 196px;
+  background-color: #fff;
+  padding: 14px 23px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.navigateProcessStep {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.navigateProcessStepTop {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navigateProcessStepTopImg {
+  width: 88px;
+  height: 88px;
+}
+
+.navigateProcessStepTopNum {
+  width: 20px;
+  height: 20px;
+  background: #303133;
+  border-radius: 50%;
+  font-size: 12px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.navigateProcessStepTopTitle {
+  font-size: 18px;
+  color: #303133;
+  margin-left: 4px;
+  font-weight: 700;
+}
+
+.navigateProcessStepTopLongArrow {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  background: #909399;
+  margin-left: 14px;
+}
+
+.navigateProcessStepTopLongArrow::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid #909399;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+.navigateProcessStepCenter {
+  color: #414141;
+  width: 80%;
+}
+
+.navigateProcessStepBottom {
+  color: #409eff;
+  cursor: pointer;
+}
+
+.navigateProcessBottom {
+  height: 74px;
+  display: flex;
+}
+
+.navigateProcessBottomLeft {
+  cursor: pointer;
+  height: 70%;
+  padding: 10px 20px;
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  border-radius: 4px;
+}
+
+.navigateProcessBottomLeft::after {
+  content: " ";
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 6px;
+  height: 90px;
+  background: #f0f4fb;
+  transform: translateX(-50%) rotate(30deg);
+  transform-origin: center;
+  z-index: 1;
+}
+
+.navigateProcessBottomLeftTop {
+  background: linear-gradient(180deg, #565656, #0d0d0d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 700;
+  padding-right: 10px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigateProcessBottomLeftBottom {
+  color: #606266;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.navigateProcessBottomCenter {
+  cursor: pointer;
+  height: 70%;
+  padding: 10px 20px;
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  border-radius: 4px;
+}
+
+.navigateProcessBottomCenter::after {
+  content: " ";
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  width: 6px;
+  height: 90px;
+  background: #f0f4fb;
+  transform: translateX(-50%) rotate(30deg);
+  transform-origin: center;
+  z-index: 1;
+}
+
+.navigateProcessBottomCenterTop {
+  background: linear-gradient(180deg, #565656, #0d0d0d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 700;
+  padding-right: 10px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigateProcessBottomCenterBottom {
+  color: #606266;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.navigateProcessBottomRight {
+  cursor: pointer;
+  height: 70%;
+  padding: 10px 20px;
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  border-radius: 4px;
+}
+
+.navigateProcessBottomRightTop {
+  background: linear-gradient(180deg, #565656, #0d0d0d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-style: italic;
+  font-size: 16px;
+  font-weight: 700;
+  padding-right: 10px;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigateProcessBottomRightBottom {
+  color: #606266;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+/* 轮播图样式 */
+.navigateSwiper {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  background: #f0f4fb;
+  border-radius: 4px;
+  margin: 20px 0;
+}
+
+.swiperSlide {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiperImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiperBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #303133;
+  z-index: 10;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.navigateSwiper:hover .swiperBtn {
+  opacity: 1;
+  visibility: visible;
+}
+
+.swiperBtn:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.swiperBtn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.swiperBtnLeft {
+  left: 20px;
+}
+
+.swiperBtnRight {
+  right: 20px;
+}
+
+.navigateProjectInfo {
+  display: flex;
+  height: 368px;
+  border-radius: 4px;
+  background: #f0f4fb;
+  padding: 14px;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.navigateProjectInfoLeft {
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 14px;
+}
+
+.navigateProjectInfoLeftTitle {
+  font-weight: 700;
+  font-size: 16px;
+  color: #303133;
+}
+
+.navigateProjectInfoLeftInfo {
+  flex: 1;
+  color: #606266;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 14px;
+  overflow-y: auto;
+}
+
+.navigateProjectInfoLeftInfoItem {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 4px;
+  background: #fafafa;
+  justify-content: space-between;
+  /* padding: 4px; */
+}
+
+.navigateProjectInfoLeftInfoItemTitle {
+  font-weight: 700;
+}
+
+.navigateProjectInfoLeftInfoItemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+}
+
+.navigateProjectInfoLeftInfoItemRowRight {
+  font-weight: 700;
+  color: #333;
+  max-width: 70%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.navigateProjectInfoRight {
+  flex: 1;
+  overflow-x: hidden;
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 14px;
+}
+
+.navigateProjectInfoRightTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  padding: 0 20px;
+}
+
+.navigateProjectInfoRightTitleLine1 {
+  flex: 1;
+  height: 0;
+  border: 2px solid;
+  -o-border-image: linear-gradient(90deg,
+      rgba(64, 158, 255, 0),
+      rgba(64, 158, 255, 0.5) 100%) 2 2;
+  border-image: linear-gradient(90deg,
+      rgba(64, 158, 255, 0),
+      rgba(64, 158, 255, 0.5) 100%) 2 2;
+}
+
+.navigateProjectInfoRightTitleText {
+  color: #409eff;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 12px;
+}
+
+.navigateProjectInfoRightTitleLine2 {
+  flex: 1;
+  height: 0;
+  border: 2px solid;
+  -o-border-image: linear-gradient(90deg,
+      rgba(64, 158, 255, 0.5),
+      rgba(64, 158, 255, 0) 100%) 2 2;
+  border-image: linear-gradient(90deg,
+      rgba(64, 158, 255, 0.5),
+      rgba(64, 158, 255, 0) 100%) 2 2;
+}
+
+.navigateProjectInfoTable {
+  height: 243px;
+}
+
+.navigateProjectInfoTableA {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  position: relative;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: #606266;
+  border-bottom: 2px solid #fff;
+}
+
+.navigateProjectInfoTableA:hover {
+  color: #409eff;
+  border-bottom: 2px solid #409eff;
+}
+
+.navigateProjectInfoRightBottom {
+  color: #303133;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.navigateProjectInfoRightBottomText {
+  color: #409eff;
+  font-weight: 700;
+}
+
+.navigateProjectInfoRightBottom:hover {
+  text-decoration: underline;
+}
+
+.navigateProjectInfoRightBottomTableSearch {
+  display: flex;
+  align-items: center;
+}

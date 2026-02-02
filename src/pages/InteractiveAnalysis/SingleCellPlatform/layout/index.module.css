@@ -1,7 +1,12 @@
 /* 整体布局 */
 .singleCellLayout {
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   background: #f0f2f5;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 /* 顶部Header样式 */
@@ -59,7 +64,16 @@
 .sidebar {
   background: #2c3e50;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-  overflow: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sidebar :global(.ant-layout-sider-children) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 /* 搜索框 */
@@ -67,10 +81,19 @@
   padding: 16px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   background: #2c3e50;
+  flex-shrink: 0;
 }
 
 .searchBox :global(.ant-input-affix-wrapper) {
   border-radius: 4px;
+}
+
+/* 菜单容器 */
+.menuContainer {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
 }
 
 /* 侧边栏菜单 */
@@ -122,11 +145,16 @@
 /* 主内容区 */
 .mainContent {
   background: #f0f2f5;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .contentWrapper {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* 顶部导航 */
@@ -185,5 +213,7 @@
 /* 页面内容 */
 .pageContent {
   flex: 1;
-  padding: 10px;
+  padding: 24px;
+  overflow: auto;
+  min-width: 0;
 }
