@@ -1,0 +1,122 @@
+/* 分析平台样式 */
+.analysis-platform {}
+
+.platform-section {
+  margin-bottom: 24px;
+}
+
+/* 为所有分区标题下方添加分割线 */
+.platform-section .section-header {
+  border-bottom: 1px solid #e8e8e8;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-header h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.section-header .icon {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.platform-card {
+  border: 1px solid #e8e8e8; /* 添加边框代替阴影 */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.platform-card:hover {
+  border-color: #1890ff; /* 鼠标悬停时边框变为蓝色 */
+}
+
+.platform-card .ant-card-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.platform-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.platform-name {
+  font-size: 16px;
+  margin: 8px 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.platform-actions {
+  border-top: 1px solid #e8e8e8; /* 按钮区域上方添加分隔线 */
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+.platform-actions button {
+  margin: 0 4px;
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .platform-section {
+    margin-bottom: 16px;
+  }
+
+  .section-header {
+    padding: 12px 16px;
+  }
+
+  .section-header h2 {
+    font-size: 15px;
+  }
+
+  .ant-row {
+    padding: 16px;
+  }
+
+  .platform-card .ant-card-body {
+    padding: 16px 12px;
+    min-height: 200px;
+  }
+
+  .platform-icon {
+    font-size: 48px;
+    height: 56px;
+    margin: 24px 0 12px;
+  }
+
+  .platform-card .platform-tag + .ant-card-body .platform-icon {
+    margin-top: 40px;
+  }
+
+  .platform-name {
+    font-size: 14px;
+    min-height: 38px;
+    margin-bottom: 12px;
+  }
+
+  .platform-actions {
+    padding-top: 10px;
+  }
+
+  .platform-actions .ant-btn-link {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
