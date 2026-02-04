@@ -1,0 +1,12 @@
+[
+    {
+        "url":"/Task/getCurrentTaskNumbers",
+        "method":"post",
+        "response":{"current":"default_pipeline","currentName":"tenx44712YkRAEhY","taskId":"44712","result":[{"task_number":"default_pipeline","task_name":"tenx44712YkRAEhY","task_id":"44712"},{"task_number":"default_original","task_name":"tenx44812qvBVokG","task_id":"44812"},{"task_number":"test","task_name":"tenx54416cCRDOmH","task_id":"54416"},{"task_number":"4123315073","task_name":"tenx86364olZVLHo","task_id":"86364"},{"task_number":"test_1115","task_name":"tenx87768AdEMXln","task_id":"87768"},{"task_number":"1127","task_name":"tenx89470LbxujVu","task_id":"89470"}],"status":1}
+    },
+    {
+        "url":"/Task/getTaskNumbers",
+        "method":"post",
+        "response":{"task_numbers":[]}
+    }
+]

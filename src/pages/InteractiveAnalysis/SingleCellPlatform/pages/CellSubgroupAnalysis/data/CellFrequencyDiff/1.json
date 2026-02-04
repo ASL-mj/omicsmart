@@ -1,0 +1,73 @@
+{
+    "status": 1,
+    "result": {
+        "columns": [
+            "Cluster",
+            "PRE1",
+            "POST1",
+            "total"
+        ],
+        "data": [
+            {
+                "Cluster": "Immature_Ery2",
+                "PRE1": "139  (6.57%)",
+                "POST1": "848  (27.99%)",
+                "total": 987
+            },
+            {
+                "Cluster": "Immature_Ery1",
+                "PRE1": "526  (24.85%)",
+                "POST1": "850  (28.05%)",
+                "total": 1376
+            },
+            {
+                "Cluster": "Monocytes",
+                "PRE1": "377  (17.81%)",
+                "POST1": "345  (11.39%)",
+                "total": 722
+            },
+            {
+                "Cluster": 3,
+                "PRE1": "453  (21.4%)",
+                "POST1": "173  (5.71%)",
+                "total": 626
+            },
+            {
+                "Cluster": "Test_cells",
+                "PRE1": "88  (4.16%)",
+                "POST1": "352  (11.62%)",
+                "total": 440
+            },
+            {
+                "Cluster": "Immature_Granulocytes",
+                "PRE1": "62  (2.93%)",
+                "POST1": "297  (9.8%)",
+                "total": 359
+            },
+            {
+                "Cluster": "Mature_Ery",
+                "PRE1": "393  (18.56%)",
+                "POST1": "128  (4.22%)",
+                "total": 521
+            },
+            {
+                "Cluster": "T_cells",
+                "PRE1": "53  (2.5%)",
+                "POST1": "34  (1.12%)",
+                "total": 87
+            },
+            {
+                "Cluster": "B_cells",
+                "PRE1": "26  (1.23%)",
+                "POST1": "3  (0.1%)",
+                "total": 29
+            },
+            {
+                "PRE1": 2117,
+                "POST1": 3030,
+                "total": 5147,
+                "Cluster": "total"
+            }
+        ]
+    }
+}

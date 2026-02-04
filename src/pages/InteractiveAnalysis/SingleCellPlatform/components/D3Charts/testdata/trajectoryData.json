@@ -1,0 +1,25 @@
+{
+  "points": [
+    { "x": 10, "y": 20, "time": 0, "branch": "main", "label": "Start" },
+    { "x": 20, "y": 25, "time": 1, "branch": "main", "label": "" },
+    { "x": 30, "y": 30, "time": 2, "branch": "main", "label": "" },
+    { "x": 40, "y": 35, "time": 3, "branch": "main", "label": "Branch Point" },
+    { "x": 50, "y": 45, "time": 4, "branch": "branch1", "label": "" },
+    { "x": 60, "y": 55, "time": 5, "branch": "branch1", "label": "" },
+    { "x": 70, "y": 65, "time": 6, "branch": "branch1", "label": "End 1" },
+    { "x": 50, "y": 25, "time": 4, "branch": "branch2", "label": "" },
+    { "x": 60, "y": 20, "time": 5, "branch": "branch2", "label": "" },
+    { "x": 70, "y": 15, "time": 6, "branch": "branch2", "label": "End 2" }
+  ],
+  "paths": [
+    { "from": 0, "to": 1, "branch": "main" },
+    { "from": 1, "to": 2, "branch": "main" },
+    { "from": 2, "to": 3, "branch": "main" },
+    { "from": 3, "to": 4, "branch": "branch1" },
+    { "from": 4, "to": 5, "branch": "branch1" },
+    { "from": 5, "to": 6, "branch": "branch1" },
+    { "from": 3, "to": 7, "branch": "branch2" },
+    { "from": 7, "to": 8, "branch": "branch2" },
+    { "from": 8, "to": 9, "branch": "branch2" }
+  ]
+}

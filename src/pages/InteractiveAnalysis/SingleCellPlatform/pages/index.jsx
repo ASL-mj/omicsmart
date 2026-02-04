@@ -33,7 +33,7 @@ export { default as GeneSetScoreDiff } from './GeneSetScoringAnalysis/GeneSetSco
 export { default as GeneDistributionInSet } from './GeneSetScoringAnalysis/GeneDistributionInSet';
 export { default as PositiveCellAnalysis } from './GeneSetScoringAnalysis/PositiveCellAnalysis';
 export { default as CytotraceDifferentiationAssessment } from './PseudotimeAnalysis/Cytotrace/CytotraceDifferentiationAssessment.jsx';
-export { default as CytotraceDifferentiationMapping } from './PseudotimeAnalysis/Cytotrace/CytotraceDifferentiationMapping.jsx';
+export { default as CytotraceLevelMapping } from './PseudotimeAnalysis/Cytotrace/CytotraceLevelMapping.jsx';
 export { default as Monocle2Trajectory } from './PseudotimeAnalysis/Monocle2/Monocle2Trajectory';
 export { default as Monocle2PseudotimeDEG } from './PseudotimeAnalysis/Monocle2/Monocle2PseudotimeDEG';
 export { default as Monocle2StateDEG } from './PseudotimeAnalysis/Monocle2/Monocle2StateDEG';
@@ -43,7 +43,7 @@ export { default as Monocle3DimensionReduction } from './PseudotimeAnalysis/Mono
 export { default as Monocle3PseudotimeTrajectory } from './PseudotimeAnalysis/Monocle3/Monocle3PseudotimeTrajectory';
 export { default as Monocle3Mapping } from './PseudotimeAnalysis/Monocle3/Monocle3Mapping';
 export { default as PAGAScatter } from './PseudotimeAnalysis/PAGA/PAGAScatter';
-export { default as PAGAGrid } from './PseudotimeAnalysis/PAGA/PAGAGrid';
+export { default as PAGANetwork } from './PseudotimeAnalysis/PAGA/PAGANetwork';
 export { default as PAGAPseudotimeDEG } from './PseudotimeAnalysis/PAGA/PAGAPseudotimeDEG';
 export { default as PAGAFeatureVisualization } from './PseudotimeAnalysis/PAGA/PAGAFeatureVisualization';
 export { default as SlingshotDimensionReduction } from './PseudotimeAnalysis/Slingshot/SlingshotDimensionReduction.jsx';
@@ -64,3 +64,15 @@ export { default as Feedback } from './Feedback';
 export { default as MyClassroom } from './ExclusiveOmicshare/MyClassroom';
 export { default as MyKnowledgeBase } from './ExclusiveOmicshare/MyKnowledgeBase';
 export { default as MyTools } from './ExclusiveOmicshare/MyTools';
+
+// 转录因子分析
+export { default as RegulonsActivityDimensionReduction } from './TranscriptionFactorAnalysis/RegulonsActivityDimensionReduction.jsx'
+export { default as RegulonsActivityFeature } from './TranscriptionFactorAnalysis/RegulonsActivityFeature.jsx'
+export { default as RegulonsExpressionFeature } from './TranscriptionFactorAnalysis/RegulonsExpressionFeature.jsx'
+export { default as RegulonsOpennessFeature } from './TranscriptionFactorAnalysis/RegulonsOpennessFeature.jsx'
+export { default as TFGeneInteractionNetwork } from './TranscriptionFactorAnalysis/TFGeneInteractionNetwork.jsx'
+export { default as TFGeneStats } from './TranscriptionFactorAnalysis/TFGeneStats.jsx'
+
+// 基因查询
+export { default as GroupDiffTask} from './GeneQuery/GroupDiffTask.jsx'
+export { default as SubgroupTask} from './GeneQuery/SubgroupTask.jsx'

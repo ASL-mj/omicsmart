@@ -1,0 +1,56 @@
+[
+  {
+    "category": "2018",
+    "values": {
+      "Series A": 30,
+      "Series B": 50,
+      "Series C": 20,
+      "Series D": 40
+    }
+  },
+  {
+    "category": "2019",
+    "values": {
+      "Series A": 45,
+      "Series B": 60,
+      "Series C": 35,
+      "Series D": 50
+    }
+  },
+  {
+    "category": "2020",
+    "values": {
+      "Series A": 55,
+      "Series B": 70,
+      "Series C": 45,
+      "Series D": 60
+    }
+  },
+  {
+    "category": "2021",
+    "values": {
+      "Series A": 65,
+      "Series B": 80,
+      "Series C": 55,
+      "Series D": 70
+    }
+  },
+  {
+    "category": "2022",
+    "values": {
+      "Series A": 75,
+      "Series B": 90,
+      "Series C": 65,
+      "Series D": 80
+    }
+  },
+  {
+    "category": "2023",
+    "values": {
+      "Series A": 85,
+      "Series B": 100,
+      "Series C": 75,
+      "Series D": 90
+    }
+  }
+]

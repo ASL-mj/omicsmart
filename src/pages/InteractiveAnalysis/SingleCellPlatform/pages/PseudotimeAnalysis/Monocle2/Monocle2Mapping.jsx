@@ -1,15 +1,520 @@
-import React from 'react';
-import PageTemplate from '../../../components/PageTemplate.jsx';
+import { useEffect, useRef, useState } from 'react';
+import PageTemplate from '../../../components/PageTemplate/index.jsx';
+import ResultPageTemplate from '../../../components/ResultPageTemplate/index.jsx';
+import { message, Tabs } from 'antd';
+import * as d3 from 'd3';
 
 const Monocle2Mapping = () => {
+  const [activeTab, setActiveTab] = useState('pseudotime');
+  const pseudotimeMapChartRef = useRef(null);
+  const stateMapChartRef = useRef(null);
+
+  // 选中的行
+  const [selectedPseudotimeRows, setSelectedPseudotimeRows] = useState(['1', '2', '3', '4', '5']);
+  const [selectedStateRows, setSelectedStateRows] = useState(['1', '2', '3', '4', '5']);
+
+  // 拟时间映射图表数据
+  const pseudotimeTableData = [
+    { key: '1', cell: 'Cell_001', x: 2.3, y: 1.8, pseudotime: 0.23, state: 'State_1', cluster: 'Cluster_1' },
+    { key: '2', cell: 'Cell_002', x: -1.2, y: 0.5, pseudotime: 0.45, state: 'State_2', cluster: 'Cluster_2' },
+    { key: '3', cell: 'Cell_003', x: 0.8, y: -2.1, pseudotime: 0.67, state: 'State_2', cluster: 'Cluster_2' },
+    { key: '4', cell: 'Cell_004', x: 1.5, y: 0.9, pseudotime: 0.82, state: 'State_3', cluster: 'Cluster_3' },
+    { key: '5', cell: 'Cell_005', x: -0.7, y: 1.6, pseudotime: 0.35, state: 'State_1', cluster: 'Cluster_1' },
+  ];
+
+  const pseudotimeTableColumns = [
+    { title: '细胞', dataIndex: 'cell', key: 'cell' },
+    { title: 'X坐标', dataIndex: 'x', key: 'x', sorter: (a, b) => a.x - b.x },
+    { title: 'Y坐标', dataIndex: 'y', key: 'y', sorter: (a, b) => a.y - b.y },
+    { title: '拟时间', dataIndex: 'pseudotime', key: 'pseudotime', sorter: (a, b) => a.pseudotime - b.pseudotime },
+    { title: '状态', dataIndex: 'state', key: 'state' },
+    { title: '亚群', dataIndex: 'cluster', key: 'cluster' },
+  ];
+
+  // 分化状态映射图表数据
+  const stateTableData = [
+    { key: '1', cell: 'Cell_001', x: 2.3, y: 1.8, state: 'Early', score: 0.15, cluster: 'Epithelial' },
+    { key: '2', cell: 'Cell_002', x: -1.2, y: 0.5, state: 'Mid', score: 0.52, cluster: 'Stromal' },
+    { key: '3', cell: 'Cell_003', x: 0.8, y: -2.1, state: 'Late', score: 0.87, cluster: 'Immune' },
+    { key: '4', cell: 'Cell_004', x: 1.5, y: 0.9, state: 'Mid', score: 0.63, cluster: 'Epithelial' },
+    { key: '5', cell: 'Cell_005', x: -0.7, y: 1.6, state: 'Early', score: 0.28, cluster: 'Stromal' },
+  ];
+
+  const stateTableColumns = [
+    { title: '细胞', dataIndex: 'cell', key: 'cell' },
+    { title: 'X坐标', dataIndex: 'x', key: 'x', sorter: (a, b) => a.x - b.x },
+    { title: 'Y坐标', dataIndex: 'y', key: 'y', sorter: (a, b) => a.y - b.y },
+    { title: '分化状态', dataIndex: 'state', key: 'state' },
+    { title: '分化得分', dataIndex: 'score', key: 'score', sorter: (a, b) => a.score - b.score },
+    { title: '亚群', dataIndex: 'cluster', key: 'cluster' },
+  ];
+
+  // 更新拟时间映射图 (D3)
+  const updatePseudotimeMapChart = (selectedKeys) => {
+    if (!pseudotimeMapChartRef.current) return;
+
+    // 清空之前的内容
+    d3.select(pseudotimeMapChartRef.current).selectAll('*').remove();
+
+    // 根据选中的行过滤数据
+    const selectedData = pseudotimeTableData.filter(item => selectedKeys.includes(item.key));
+    
+    if (selectedData.length === 0) return;
+
+    // 设置尺寸和边距
+    const margin = { top: 60, right: 120, bottom: 50, left: 60 };
+    const width = pseudotimeMapChartRef.current.clientWidth - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    // 创建 SVG
+    const svg = d3.select(pseudotimeMapChartRef.current)
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    // 计算坐标范围
+    const xMin = d3.min(selectedData, d => d.x);
+    const xMax = d3.max(selectedData, d => d.x);
+    const yMin = d3.min(selectedData, d => d.y);
+    const yMax = d3.max(selectedData, d => d.y);
+    
+    // X 轴比例尺
+    const xScale = d3.scaleLinear()
+      .domain([xMin - 0.5, xMax + 0.5])
+      .range([0, width]);
+
+    // Y 轴比例尺
+    const yScale = d3.scaleLinear()
+      .domain([yMin - 0.5, yMax + 0.5])
+      .range([height, 0]);
+
+    // 拟时间颜色比例尺
+    const pseudotimeMin = d3.min(selectedData, d => d.pseudotime);
+    const pseudotimeMax = d3.max(selectedData, d => d.pseudotime);
+    const colorScale = d3.scaleSequential()
+      .domain([pseudotimeMin, pseudotimeMax])
+      .interpolator(d3.interpolateViridis);
+
+    // 绘制散点图
+    svg.append('g')
+      .selectAll('circle')
+      .data(selectedData)
+      .join('circle')
+      .attr('cx', d => xScale(d.x))
+      .attr('cy', d => yScale(d.y))
+      .attr('r', 8)
+      .attr('fill', d => colorScale(d.pseudotime))
+      .attr('opacity', 0.7)
+      .on('mouseover', function(event, d) {
+        d3.select(this).attr('opacity', 1);
+        
+        // 显示提示信息
+        const tooltip = svg.append('g')
+          .attr('class', 'tooltip')
+          .attr('pointer-events', 'none');
+          
+        tooltip.append('rect')
+          .attr('x', xScale(d.x) + 10)
+          .attr('y', yScale(d.y) - 50)
+          .attr('width', 150)
+          .attr('height', 80)
+          .attr('fill', 'white')
+          .attr('stroke', 'black')
+          .attr('stroke-width', 1)
+          .attr('rx', 5)
+          .attr('ry', 5);
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) - 40)
+          .text(d.cell)
+          .style('font-size', '12px')
+          .style('font-weight', 'bold');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) - 25)
+          .text(`拟时间: ${d.pseudotime}`)
+          .style('font-size', '12px');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) - 10)
+          .text(`状态: ${d.state}`)
+          .style('font-size', '12px');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) + 5)
+          .text(`亚群: ${d.cluster}`)
+          .style('font-size', '12px');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) + 20)
+          .text(`坐标: (${d.x}, ${d.y})`)
+          .style('font-size', '12px');
+      })
+      .on('mouseout', function() {
+        d3.select(this).attr('opacity', 0.7);
+        svg.selectAll('.tooltip').remove();
+      });
+
+    // 添加坐标轴
+    svg.append('g')
+      .attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(xScale).ticks(5))
+      .selectAll('text')
+      .style('font-size', '12px');
+
+    svg.append('g')
+      .call(d3.axisLeft(yScale).ticks(5))
+      .selectAll('text')
+      .style('font-size', '12px');
+
+    // Y 轴标签
+    svg.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - (height / 2))
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .style('font-size', '14px')
+      .text('Y坐标');
+
+    // X 轴标签
+    svg.append('text')
+      .attr('x', width / 2)
+      .attr('y', height + margin.bottom - 10)
+      .style('text-anchor', 'middle')
+      .style('font-size', '14px')
+      .text('X坐标');
+
+    // 标题
+    svg.append('text')
+      .attr('x', width / 2)
+      .attr('y', -30)
+      .attr('text-anchor', 'middle')
+      .style('font-size', '16px')
+      .style('font-weight', 'bold')
+      .text('拟时间映射图');
+
+    // 颜色图例
+    const legendWidth = 20;
+    const legendHeight = 10;
+    const values = d3.range(pseudotimeMin, pseudotimeMax, (pseudotimeMax - pseudotimeMin) / 50).reverse();
+    
+    const legendGroup = svg.append('g')
+      .attr('transform', `translate(${width + 20}, 50)`);
+
+    values.forEach((val, idx) => {
+      legendGroup.append('rect')
+        .attr('x', 0)
+        .attr('y', idx * legendHeight)
+        .attr('width', legendWidth)
+        .attr('height', legendHeight)
+        .attr('fill', colorScale(val));
+    });
+
+    // 颜色图例标签
+    legendGroup.append('text')
+      .attr('x', legendWidth + 5)
+      .attr('y', 0)
+      .style('font-size', '10px')
+      .text(pseudotimeMax.toFixed(2));
+
+    legendGroup.append('text')
+      .attr('x', legendWidth + 5)
+      .attr('y', values.length * legendHeight)
+      .style('font-size', '10px')
+      .text(pseudotimeMin.toFixed(2));
+  };
+
+  // 更新分化状态映射图 (D3)
+  const updateStateMapChart = (selectedKeys) => {
+    if (!stateMapChartRef.current) return;
+
+    // 清空之前的内容
+    d3.select(stateMapChartRef.current).selectAll('*').remove();
+
+    // 根据选中的行过滤数据
+    const selectedData = stateTableData.filter(item => selectedKeys.includes(item.key));
+    
+    if (selectedData.length === 0) return;
+
+    // 设置尺寸和边距
+    const margin = { top: 60, right: 120, bottom: 50, left: 60 };
+    const width = stateMapChartRef.current.clientWidth - margin.left - margin.right;
+    const height = 500 - margin.top - margin.bottom;
+
+    // 创建 SVG
+    const svg = d3.select(stateMapChartRef.current)
+      .append('svg')
+      .attr('width', width + margin.left + margin.right)
+      .attr('height', height + margin.top + margin.bottom)
+      .append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
+
+    // 计算坐标范围
+    const xMin = d3.min(selectedData, d => d.x);
+    const xMax = d3.max(selectedData, d => d.x);
+    const yMin = d3.min(selectedData, d => d.y);
+    const yMax = d3.max(selectedData, d => d.y);
+    
+    // X 轴比例尺
+    const xScale = d3.scaleLinear()
+      .domain([xMin - 0.5, xMax + 0.5])
+      .range([0, width]);
+
+    // Y 轴比例尺
+    const yScale = d3.scaleLinear()
+      .domain([yMin - 0.5, yMax + 0.5])
+      .range([height, 0]);
+
+    // 分化状态颜色比例尺
+    const states = [...new Set(selectedData.map(d => d.state))];
+    const colorScale = d3.scaleOrdinal()
+      .domain(states)
+      .range(d3.schemeCategory10.slice(0, states.length));
+
+    // 绘制散点图
+    svg.append('g')
+      .selectAll('circle')
+      .data(selectedData)
+      .join('circle')
+      .attr('cx', d => xScale(d.x))
+      .attr('cy', d => yScale(d.y))
+      .attr('r', 8)
+      .attr('fill', d => colorScale(d.state))
+      .attr('opacity', 0.7)
+      .on('mouseover', function(event, d) {
+        d3.select(this).attr('opacity', 1);
+        
+        // 显示提示信息
+        const tooltip = svg.append('g')
+          .attr('class', 'tooltip')
+          .attr('pointer-events', 'none');
+          
+        tooltip.append('rect')
+          .attr('x', xScale(d.x) + 10)
+          .attr('y', yScale(d.y) - 50)
+          .attr('width', 150)
+          .attr('height', 80)
+          .attr('fill', 'white')
+          .attr('stroke', 'black')
+          .attr('stroke-width', 1)
+          .attr('rx', 5)
+          .attr('ry', 5);
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) - 40)
+          .text(d.cell)
+          .style('font-size', '12px')
+          .style('font-weight', 'bold');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) - 25)
+          .text(`分化状态: ${d.state}`)
+          .style('font-size', '12px');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) - 10)
+          .text(`分化得分: ${d.score}`)
+          .style('font-size', '12px');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) + 5)
+          .text(`亚群: ${d.cluster}`)
+          .style('font-size', '12px');
+          
+        tooltip.append('text')
+          .attr('x', xScale(d.x) + 15)
+          .attr('y', yScale(d.y) + 20)
+          .text(`坐标: (${d.x}, ${d.y})`)
+          .style('font-size', '12px');
+      })
+      .on('mouseout', function() {
+        d3.select(this).attr('opacity', 0.7);
+        svg.selectAll('.tooltip').remove();
+      });
+
+    // 添加坐标轴
+    svg.append('g')
+      .attr('transform', `translate(0,${height})`)
+      .call(d3.axisBottom(xScale).ticks(5))
+      .selectAll('text')
+      .style('font-size', '12px');
+
+    svg.append('g')
+      .call(d3.axisLeft(yScale).ticks(5))
+      .selectAll('text')
+      .style('font-size', '12px');
+
+    // Y 轴标签
+    svg.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 0 - margin.left)
+      .attr('x', 0 - (height / 2))
+      .attr('dy', '1em')
+      .style('text-anchor', 'middle')
+      .style('font-size', '14px')
+      .text('Y坐标');
+
+    // X 轴标签
+    svg.append('text')
+      .attr('x', width / 2)
+      .attr('y', height + margin.bottom - 10)
+      .style('text-anchor', 'middle')
+      .style('font-size', '14px')
+      .text('X坐标');
+
+    // 标题
+    svg.append('text')
+      .attr('x', width / 2)
+      .attr('y', -30)
+      .attr('text-anchor', 'middle')
+      .style('font-size', '16px')
+      .style('font-weight', 'bold')
+      .text('分化状态映射图');
+
+    // 图例
+    const legend = svg.append('g')
+      .attr('transform', `translate(${width + 20}, 0)`);
+
+    states.forEach((state, i) => {
+      const legendRow = legend.append('g')
+        .attr('transform', `translate(0, ${i * 25})`);
+
+      legendRow.append('circle')
+        .attr('r', 6)
+        .attr('fill', colorScale(state));
+
+      legendRow.append('text')
+        .attr('x', 15)
+        .attr('y', 5)
+        .style('font-size', '12px')
+        .text(state);
+    });
+  };
+
+  // 初始化拟时间映射图 - 当 Tab 切换到拟时间映射图时初始化
+  useEffect(() => {
+    if (activeTab === 'pseudotime' && pseudotimeMapChartRef.current) {
+      updatePseudotimeMapChart(selectedPseudotimeRows);
+      
+      // 响应式
+      const handleResize = () => updatePseudotimeMapChart(selectedPseudotimeRows);
+      window.addEventListener('resize', handleResize);
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [activeTab, selectedPseudotimeRows]);
+
+  // 初始化分化状态映射图 - 当 Tab 切换到分化状态映射图时初始化
+  useEffect(() => {
+    if (activeTab === 'state' && stateMapChartRef.current) {
+      updateStateMapChart(selectedStateRows);
+      
+      // 响应式
+      const handleResize = () => updateStateMapChart(selectedStateRows);
+      window.addEventListener('resize', handleResize);
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [activeTab, selectedStateRows]);
+
+  // 下载处理
+  const handlePseudotimeDownload = (selectedRowKeys) => {
+    message.success(`正在下载拟时间映射图的 ${selectedRowKeys.length} 条数据`);
+  };
+
+  const handleStateDownload = (selectedRowKeys) => {
+    message.success(`正在下载分化状态映射图的 ${selectedRowKeys.length} 条数据`);
+  };
+
+  // 刷新处理
+  const handlePseudotimeRefresh = () => {
+    message.success('已刷新拟时间映射图数据');
+    setSelectedPseudotimeRows(['1', '2', '3', '4', '5']);
+  };
+
+  const handleStateRefresh = () => {
+    message.success('已刷新分化状态映射图数据');
+    setSelectedStateRows(['1', '2', '3', '4', '5']);
+  };
+
+  const tabItems = [
+    {
+      key: 'pseudotime',
+      label: '拟时间映射图',
+    },
+    {
+      key: 'state',
+      label: '分化状态映射图',
+    }
+  ];
+
   return (
-    <PageTemplate 
-      title="Monocle2映射图" 
-      description="在此页面可以查看Monocle2算法生成的细胞状态映射图。"
-    >
-      <div>
-        <p>Monocle2映射图展示了细胞在低维空间中的分布和轨迹路径。</p>
-        <p>您可以直观地观察细胞状态的连续变化，分析细胞群体的异质性。</p>
+    <PageTemplate pageTitle="Monocle2映射图">
+      <Tabs
+        activeKey={activeTab}
+        onChange={setActiveTab}
+        items={tabItems}
+        style={{ marginBottom: 16 }}
+      />
+
+      <div style={{ display: activeTab === 'pseudotime' ? 'block' : 'none' }}>
+        <ResultPageTemplate 
+          chartContent={
+            <div 
+              ref={pseudotimeMapChartRef}
+              style={{ 
+                width: '100%',
+                height: '500px',
+                background: '#fff',
+                borderRadius: 4,
+              }}
+            />
+          }
+          tableColumns={pseudotimeTableColumns}
+          tableData={pseudotimeTableData}
+          selectedRowKeys={selectedPseudotimeRows}
+          onSelectChange={setSelectedPseudotimeRows}
+          onDownload={handlePseudotimeDownload}
+          onRefresh={handlePseudotimeRefresh}
+        />
+      </div>
+
+      <div style={{ display: activeTab === 'state' ? 'block' : 'none' }}>
+        <ResultPageTemplate 
+          chartContent={
+            <div 
+              ref={stateMapChartRef}
+              style={{ 
+                width: '100%',
+                height: '500px',
+                background: '#fff',
+                borderRadius: 4,
+              }}
+            />
+          }
+          tableColumns={stateTableColumns}
+          tableData={stateTableData}
+          selectedRowKeys={selectedStateRows}
+          onSelectChange={setSelectedStateRows}
+          onDownload={handleStateDownload}
+          onRefresh={handleStateRefresh}
+        />
       </div>
     </PageTemplate>
   );

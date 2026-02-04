@@ -1,52 +1,40 @@
-import { List, Tag, Progress, Button, Space, Empty } from 'antd';
+import { Button, Empty, Space, Tag } from 'antd';
 import { 
-  ClockCircleOutlined, 
-  CheckCircleOutlined, 
-  CloseCircleOutlined,
-  SyncOutlined,
-  ReloadOutlined,
   CloseOutlined
 } from '@ant-design/icons';
 import styles from './index.module.css';
+import { useState } from 'react';
 
 const TaskDrawer = ({ visible, onClose, tasks = [] }) => {
   // 任务状态配置
-  const statusConfig = {
-    pending: {
-      label: '等待中',
-      color: 'default',
-      icon: <ClockCircleOutlined />,
-    },
-    running: {
-      label: '运行中',
-      color: 'processing',
-      icon: <SyncOutlined spin />,
-    },
-    success: {
-      label: '已完成',
-      color: 'success',
-      icon: <CheckCircleOutlined />,
-    },
-    failed: {
-      label: '失败',
-      color: 'error',
-      icon: <CloseCircleOutlined />,
-    },
+  const statusDotClass = {
+    success: styles.dotSuccess,
+    running: styles.dotRunning,
+    failed: styles.dotFailed,
+    pending: styles.dotPending,
   };
 
-  // 处理任务重试
-  const handleRetry = (taskId) => {
-    console.log('重试任务:', taskId);
+  // 状态标签文本
+  const statusText = {
+    success: '成功',
+    running: '运行中',
+    failed: '失败',
+    pending: '等待中',
   };
 
-  // 处理任务取消
-  const handleCancel = (taskId) => {
-    console.log('取消任务:', taskId);
-  };
 
-  // 处理查看详情
-  const handleViewDetail = (taskId) => {
-    console.log('查看任务详情:', taskId);
+  // 状态管理：控制哪些任务被展开
+  const [expandedTasks, setExpandedTasks] = useState(new Set());
+
+  // 切换任务展开状态
+  const toggleTaskExpand = (taskId) => {
+    const newExpandedTasks = new Set(expandedTasks);
+    if (newExpandedTasks.has(taskId)) {
+      newExpandedTasks.delete(taskId);
+    } else {
+      newExpandedTasks.add(taskId);
+    }
+    setExpandedTasks(newExpandedTasks);
   };
 
   return (
@@ -62,6 +50,21 @@ const TaskDrawer = ({ visible, onClose, tasks = [] }) => {
         />
       </div>
 
+      {/* 图例说明 */}
+      <div className={styles.legend} style={{ padding: '10px 16px', borderBottom: '1px solid #f0f0f0' }}>
+        <Space size="large">
+          {Object.keys(statusDotClass).map((status) => (
+            <div key={status} style={{ display: 'flex', alignItems: 'center' }}>
+              <span
+                className={`${styles.statusDot} ${statusDotClass[status]}`}
+                style={{ marginRight: '4px' }}
+              />
+              <span style={{ fontSize: '12px', color: '#8c8c8c' }}>{statusText[status]}</span>
+            </div>
+          ))}
+        </Space>
+      </div>
+
       {/* 内容 */}
       <div className={styles.panelContent}>
         {tasks.length === 0 ? (
@@ -70,107 +73,37 @@ const TaskDrawer = ({ visible, onClose, tasks = [] }) => {
             image={Empty.PRESENTED_IMAGE_SIMPLE}
           />
         ) : (
-          <List
-            dataSource={tasks}
-            renderItem={(task) => {
-              const status = statusConfig[task.status] || statusConfig.pending;
-              
+          <div>
+            {tasks.map((task) => {
+              const expanded = expandedTasks.has(task.id);
+
               return (
-                <List.Item className={styles.taskItem}>
-                  <div className={styles.taskCard}>
-                    {/* 任务头部 */}
-                    <div className={styles.taskHeader}>
-                      <div className={styles.taskTitle}>
-                        <span className={styles.taskIcon}>{status.icon}</span>
-                        <span className={styles.taskName}>{task.name}</span>
-                      </div>
-                      <Tag color={status.color}>{status.label}</Tag>
-                    </div>
-
-                    {/* 任务信息 */}
-                    <div className={styles.taskInfo}>
-                      <div className={styles.infoItem}>
-                        <span className={styles.infoLabel}>任务ID:</span>
-                        <span className={styles.infoValue}>{task.id}</span>
-                      </div>
-                      <div className={styles.infoItem}>
-                        <span className={styles.infoLabel}>创建时间:</span>
-                        <span className={styles.infoValue}>{task.createTime}</span>
-                      </div>
-                      {task.finishTime && (
-                        <div className={styles.infoItem}>
-                          <span className={styles.infoLabel}>完成时间:</span>
-                          <span className={styles.infoValue}>{task.finishTime}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* 进度条 */}
-                    {task.status === 'running' && task.progress !== undefined && (
-                      <div className={styles.taskProgress}>
-                        <Progress 
-                          percent={task.progress} 
-                          status="active"
-                          strokeColor={{
-                            '0%': '#108ee9',
-                            '100%': '#87d068',
-                          }}
-                        />
-                      </div>
-                    )}
-
-                    {/* 错误信息 */}
-                    {task.status === 'failed' && task.errorMessage && (
-                      <div className={styles.errorMessage}>
-                        <span className={styles.errorLabel}>错误信息:</span>
-                        <span className={styles.errorText}>{task.errorMessage}</span>
-                      </div>
-                    )}
-
-                    {/* 操作按钮 */}
-                    <div className={styles.taskActions}>
-                      <Space size="small">
-                        {task.status === 'success' && (
-                          <Button 
-                            type="primary" 
-                            size="small"
-                            onClick={() => handleViewDetail(task.id)}
-                          >
-                            查看结果
-                          </Button>
-                        )}
-                        {task.status === 'failed' && (
-                          <Button 
-                            type="primary" 
-                            size="small"
-                            icon={<ReloadOutlined />}
-                            onClick={() => handleRetry(task.id)}
-                          >
-                            重试
-                          </Button>
-                        )}
-                        {task.status === 'running' && (
-                          <Button 
-                            danger 
-                            size="small"
-                            onClick={() => handleCancel(task.id)}
-                          >
-                            取消
-                          </Button>
-                        )}
-                        <Button 
-                          size="small"
-                          onClick={() => handleViewDetail(task.id)}
-                        >
-                          详情
-                        </Button>
-                      </Space>
-                    </div>
+                <div key={task.id} className={styles.taskItem}>
+                  {/* 主行 */}
+                  <div
+                    className={styles.taskRow}
+                    onClick={() => toggleTaskExpand(task.id)}
+                  >
+                    <span
+                      className={`${styles.statusDot} ${statusDotClass[task.status]}`}
+                    />
+                    <span className={styles.taskName}>{task.name}</span>
                   </div>
-                </List.Item>
+
+                  {/* 展开内容 */}
+                  {expanded && task.taskType && (
+                    <div className={styles.taskType}>
+                      {task.taskType.split('、').map((type, index) => (
+                        <div key={index} style={{ marginLeft: '18px', marginBottom: '4px' }}>
+                          <Tag color="blue" style={{ marginBottom: '0' }}>{type.trim()}</Tag>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
-            }}
-          />
+            })}
+          </div>
         )}
       </div>
     </div>

@@ -12,7 +12,7 @@ import Step3 from "@/assets/image/SingleCellPlatform/Procss/icon_提交任务.pn
 import Step4 from "@/assets/image/SingleCellPlatform/Procss/icon_查看结果.png";
 import Banner1 from "@/assets/image/SingleCellPlatform/SwiperImg/banner1.png";
 import Banner2 from "@/assets/image/SingleCellPlatform/SwiperImg/banner2.png";
-import { homeApi } from "@/services/api";
+import { homeApi } from "@/utils/api";
 
 const { Search } = Input;
 

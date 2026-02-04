@@ -1,0 +1,17 @@
+{
+  "segments": [
+    { "id": "chr1", "label": "Chr1", "start": 0, "end": 100, "color": "#e74c3c" },
+    { "id": "chr2", "label": "Chr2", "start": 0, "end": 90, "color": "#3498db" },
+    { "id": "chr3", "label": "Chr3", "start": 0, "end": 80, "color": "#2ecc71" },
+    { "id": "chr4", "label": "Chr4", "start": 0, "end": 70, "color": "#f39c12" },
+    { "id": "chr5", "label": "Chr5", "start": 0, "end": 60, "color": "#9b59b6" }
+  ],
+  "links": [
+    { "source": "chr1", "sourceStart": 10, "sourceEnd": 20, "target": "chr2", "targetStart": 30, "targetEnd": 40, "value": 5 },
+    { "source": "chr1", "sourceStart": 50, "sourceEnd": 60, "target": "chr3", "targetStart": 20, "targetEnd": 30, "value": 8 },
+    { "source": "chr2", "sourceStart": 10, "sourceEnd": 25, "target": "chr4", "targetStart": 15, "targetEnd": 30, "value": 6 },
+    { "source": "chr3", "sourceStart": 40, "sourceEnd": 55, "target": "chr5", "targetStart": 10, "targetEnd": 25, "value": 7 },
+    { "source": "chr4", "sourceStart": 35, "sourceEnd": 50, "target": "chr1", "targetStart": 70, "targetEnd": 85, "value": 4 },
+    { "source": "chr5", "sourceStart": 30, "sourceEnd": 45, "target": "chr2", "targetStart": 60, "targetEnd": 75, "value": 9 }
+  ]
+}

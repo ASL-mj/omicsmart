@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    { "id": "Gene1", "group": 1, "value": 10 },
+    { "id": "Gene2", "group": 1, "value": 15 },
+    { "id": "Gene3", "group": 2, "value": 20 },
+    { "id": "Gene4", "group": 2, "value": 12 },
+    { "id": "Gene5", "group": 3, "value": 18 },
+    { "id": "Gene6", "group": 3, "value": 14 },
+    { "id": "Gene7", "group": 1, "value": 16 },
+    { "id": "Gene8", "group": 2, "value": 11 },
+    { "id": "Gene9", "group": 3, "value": 13 },
+    { "id": "Gene10", "group": 1, "value": 17 }
+  ],
+  "links": [
+    { "source": "Gene1", "target": "Gene2", "value": 5 },
+    { "source": "Gene1", "target": "Gene3", "value": 3 },
+    { "source": "Gene2", "target": "Gene4", "value": 4 },
+    { "source": "Gene3", "target": "Gene5", "value": 6 },
+    { "source": "Gene4", "target": "Gene6", "value": 2 },
+    { "source": "Gene5", "target": "Gene7", "value": 7 },
+    { "source": "Gene6", "target": "Gene8", "value": 3 },
+    { "source": "Gene7", "target": "Gene9", "value": 5 },
+    { "source": "Gene8", "target": "Gene10", "value": 4 },
+    { "source": "Gene9", "target": "Gene1", "value": 6 },
+    { "source": "Gene2", "target": "Gene5", "value": 3 },
+    { "source": "Gene3", "target": "Gene6", "value": 4 },
+    { "source": "Gene4", "target": "Gene7", "value": 2 },
+    { "source": "Gene5", "target": "Gene8", "value": 5 }
+  ]
+}

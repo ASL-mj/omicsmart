@@ -1,0 +1,39 @@
+{
+    "columns": [
+        "Immature_Ery2",
+        "Immature_Ery1",
+        "Monocytes",
+        3,
+        "Test_cells",
+        "Immature_Granulocytes",
+        "Mature_Ery",
+        "T_cells",
+        "B_cells"
+    ],
+    "data": [
+        [
+            [
+                139,
+                526,
+                377,
+                453,
+                88,
+                62,
+                393,
+                53,
+                26
+            ],
+            [
+                848,
+                850,
+                345,
+                173,
+                352,
+                297,
+                128,
+                34,
+                3
+            ]
+        ]
+    ]
+}

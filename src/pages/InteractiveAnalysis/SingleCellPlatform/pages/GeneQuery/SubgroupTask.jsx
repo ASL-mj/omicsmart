@@ -1,11 +1,12 @@
 import React from 'react';
-import PageTemplate from '../../components/PageTemplate.jsx';
+import PageTemplate from '../../components/PageTemplate/index.jsx';
 
 const SubgroupTask = () => {
   return (
     <PageTemplate 
       title="亚群类任务" 
       description="在此页面可以查询与细胞亚群相关的基因信息。"
+      showGeneSelectors={true}
     >
       <div>
         <p>亚群类任务允许用户查询特定细胞亚群中的基因表达模式。</p>

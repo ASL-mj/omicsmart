@@ -1,5 +1,5 @@
 import React from 'react';
-import PageTemplate from '../../components/PageTemplate.jsx';
+import PageTemplate from '../../components/PageTemplate/index.jsx';
 
 const MyClassroom = () => {
   return (

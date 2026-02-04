@@ -1,11 +1,12 @@
 import React from 'react';
-import PageTemplate from '../../components/PageTemplate.jsx';
+import PageTemplate from '../../components/PageTemplate/index.jsx';
 
 const GroupDiffTask = () => {
   return (
     <PageTemplate 
       title="组间差异任务" 
       description="在此页面可以查询组间差异分析相关的基因信息。"
+      showGeneSelectors={true}
     >
       <div>
         <p>组间差异任务允许用户查询参与组间差异分析的基因信息。</p>

@@ -183,9 +183,9 @@ export const navigationConfig = [
             path: '/pseudotime-analysis/paga/scatter',
           },
           {
-            key: 'paga-grid',
-            label: '分化网格图',
-            path: '/pseudotime-analysis/paga/grid',
+            key: 'paga-network',
+            label: '分化网络图',
+            path: '/pseudotime-analysis/paga/network',
           },
           {
             key: 'paga-feature-visualization',

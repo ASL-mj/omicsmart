@@ -1,0 +1,100 @@
+{
+    "status": 1,
+    "result": {
+        "columns": [
+            "Immature_Ery2",
+            "Immature_Ery1",
+            "Monocytes",
+            3,
+            "Test_cells",
+            "Immature_Granulocytes",
+            "Mature_Ery",
+            "T_cells",
+            "B_cells"
+        ],
+        "rownames": [
+            "PRE",
+            "POST"
+        ],
+        "data": [
+            [
+                [
+                    139,
+                    526,
+                    377,
+                    453,
+                    88,
+                    62,
+                    393,
+                    53,
+                    26
+                ],
+                [
+                    848,
+                    850,
+                    345,
+                    173,
+                    352,
+                    297,
+                    128,
+                    34,
+                    3
+                ]
+            ]
+        ],
+        "cluster": [
+            {
+                "old": "0",
+                "new": "Immature_Ery2"
+            },
+            {
+                "old": "1",
+                "new": "Immature_Ery1"
+            },
+            {
+                "old": "2",
+                "new": "Monocytes"
+            },
+            {
+                "old": "3",
+                "new": "3"
+            },
+            {
+                "old": "4",
+                "new": "Test_cells"
+            },
+            {
+                "old": "5",
+                "new": "Immature_Ery1"
+            },
+            {
+                "old": "6",
+                "new": "Immature_Granulocytes"
+            },
+            {
+                "old": "7",
+                "new": "Mature_Ery"
+            },
+            {
+                "old": "8",
+                "new": "Mature_Ery"
+            },
+            {
+                "old": "9",
+                "new": "T_cells"
+            },
+            {
+                "old": "10",
+                "new": "Mature_Ery"
+            },
+            {
+                "old": "11",
+                "new": "Immature_Ery1"
+            },
+            {
+                "old": "12",
+                "new": "B_cells"
+            }
+        ]
+    }
+}

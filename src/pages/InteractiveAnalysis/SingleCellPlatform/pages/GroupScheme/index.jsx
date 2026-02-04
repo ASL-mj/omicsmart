@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import PageTemplate from '../../components/PageTemplate.jsx';
+import PageTemplate from '../../components/PageTemplate/index.jsx';
 import { Table, Button, Modal, Form, Input, Checkbox, Space, message } from 'antd';
 import { PlusOutlined, EyeOutlined, DeleteOutlined, QuestionCircleOutlined } from '@ant-design/icons';
-import { GroupApi } from '@/services/api';
+import { GroupApi } from '@/utils/api';
 import styles from './index.module.css';
 
 const GroupScheme = () => {
@@ -15,7 +15,6 @@ const GroupScheme = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [currentGroupDetail, setCurrentGroupDetail] = useState(null);
-  const [tasks, setTasks] = useState([]);
   const [tableData, setTableData] = useState([
     { key: 1, projectName: 'myDemo', oldSampleName: 'POST1', newSampleName: 'POST1', groupName: 'POST', includeAnalysis: true },
     { key: 2, projectName: 'myDemo', oldSampleName: 'PRE1', newSampleName: 'PRE1', groupName: 'PRE', includeAnalysis: true },
@@ -43,31 +42,6 @@ const GroupScheme = () => {
     }
   };
 
-  // 获取任务列表
-  const fetchTaskLists = async () => {
-    try {
-      const response = await GroupApi.getTaskLists();
-      
-      if (response.status === 1) {
-        const taskList = (response.result?.group || []).map(task => ({
-          id: task.task_id,
-          name: task.task_number || task.task_name,
-          status: task.task_status === 'C' ? 'success' : 
-                  task.task_status === 'E' ? 'failed' : 
-                  task.task_status === 'R' ? 'running' : 'pending',
-          createTime: task.task_time,
-          finishTime: task.task_finish,
-          progress: task.task_status === 'R' ? 50 : undefined,
-          errorMessage: task.task_status === 'E' ? '任务执行失败' : undefined,
-        }));
-        setTasks(taskList);
-      } else {
-        console.error('获取任务列表失败:', response.msg);
-      }
-    } catch (error) {
-      console.error('获取任务列表失败:', error);
-    }
-  };
 
   // 查看分组详情
   const handleViewDetail = async (id) => {
@@ -113,7 +87,7 @@ const GroupScheme = () => {
         }))
       };
       
-      const response = await GroupApi.postCreateGroupScheme(submitData);
+      const response = await GroupApi.postGrouping(submitData);
       
       if (response.status === 1) {
         message.success('创建成功');
@@ -151,7 +125,6 @@ const GroupScheme = () => {
 
   useEffect(() => {
     fetchGroupList();
-    fetchTaskLists();
   }, []);
 
   // 分组列表表格列
@@ -161,6 +134,7 @@ const GroupScheme = () => {
       dataIndex: 'group',
       key: 'group',
       align: 'center',
+      width: 200,
     },
     {
       title: '创建时间',
@@ -173,7 +147,7 @@ const GroupScheme = () => {
       title: '操作',
       key: 'action',
       align: 'center',
-      width: 120,
+      width: 200,
       render: (_, record) => (
         <Space size="small">
           <Button 
@@ -276,8 +250,6 @@ const GroupScheme = () => {
   return (
     <PageTemplate 
       pageTitle="分组方案设置"
-      onInteractiveAnalysis={() => message.info('开始交互分析')}
-      tasks={tasks}
     >
       <div className={styles.container}>
         <div className={styles.header}>
