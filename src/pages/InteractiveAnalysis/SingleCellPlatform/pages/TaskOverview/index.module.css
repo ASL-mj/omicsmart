@@ -1,0 +1,44 @@
+.container {
+  padding: 0;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 4px;
+}
+
+.summary {
+  font-size: 14px;
+  color: #666;
+}
+
+.count {
+  font-size: 18px;
+  font-weight: bold;
+  color: #1890ff;
+  margin: 0 4px;
+}
+
+.taskTable {
+  background: #fff;
+}
+
+.taskTable :global(.ant-table-thead > tr > th) {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.taskNumber {
+  color: #1890ff;
+  font-weight: 500;
+}
+
+.taskNumber:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

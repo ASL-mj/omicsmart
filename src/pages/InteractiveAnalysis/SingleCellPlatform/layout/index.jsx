@@ -250,6 +250,14 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
             className={styles.triggerBtn}
           />
         </div>
+
+        <div className={styles.headerRight}>
+          <Button type="primary" onClick={() => {
+            window.location.href = '/';
+          }}>
+            首页
+          </Button>
+        </div>
       </Header>
 
       <Layout>

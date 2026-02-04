@@ -15,45 +15,15 @@ const PageTemplate = ({
 }) => {
   const [taskDrawerOpen, setTaskDrawerOpen] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const [taskNumberList, setTaskNumberList] = useState([]);
   const [genesList, setGenesList] = useState([]);
   const [targetGene1, setTargetGene1] = useState(null);
   const [targetGene2, setTargetGene2] = useState(null);
   
-  // 任务编号列表（固定数据）
-  const taskNumberList = [
-    {
-      "task_number": "default_pipeline",
-      "task_name": "tenx44712YkRAEhY",
-      "task_id": "44712"
-    },
-    {
-      "task_number": "default_original",
-      "task_name": "tenx44812qvBVokG",
-      "task_id": "44812"
-    },
-    {
-      "task_number": "test",
-      "task_name": "tenx54416cCRDOmH",
-      "task_id": "54416"
-    },
-    {
-      "task_number": "4123315073",
-      "task_name": "tenx86364olZVLHo",
-      "task_id": "86364"
-    },
-    {
-      "task_number": "test_1115",
-      "task_name": "tenx87768AdEMXln",
-      "task_id": "87768"
-    },
-    {
-      "task_number": "1127",
-      "task_name": "tenx89470LbxujVu",
-      "task_id": "89470"
-    }
-  ];
-  
-  const [selectedTaskId, setSelectedTaskId] = useState(taskNumberList[0]?.task_id || null);
+  // 初始化时从sessionStorage读取选中的任务ID
+  const [selectedTaskId, setSelectedTaskId] = useState(() => {
+    return sessionStorage.getItem('selectedTaskId') || null;
+  });
 
   const onInteractiveAnalysis = () => {
     message.info('开始交互分析 - 目标细胞集筛选');
@@ -84,7 +54,10 @@ const PageTemplate = ({
       const response = await TaskApi.getTaskLists();
       
       if (response.status === 1) {
-        const taskList = (response.result?.group || []).map(task => ({
+        const tasks = response.result?.group || [];
+        
+        // 用于任务状态抽屉的任务列表
+        const taskList = tasks.map(task => ({
           id: task.task_id,
           name: task.task_number || task.task_name,
           status:
@@ -94,7 +67,20 @@ const PageTemplate = ({
           taskType: task.task_type,
         }));
 
+        // 用于任务编号下拉框的任务列表
+        const taskNumbers = tasks.map(task => ({
+          task_id: task.task_id,
+          task_number: task.task_number || task.task_name,
+          task_name: task.task_name,
+        }));
+
         setTasks(taskList);
+        setTaskNumberList(taskNumbers);
+        
+        // 如果还没有选中任务，默认选择第一个
+        if (!selectedTaskId && taskNumbers.length > 0) {
+          setSelectedTaskId(taskNumbers[0].task_id);
+        }
       } else {
         console.error('获取任务列表失败:', response.msg);
       }
@@ -104,10 +90,7 @@ const PageTemplate = ({
   };
 
   useEffect(() => {
-    // 使用setTimeout避免同步设置状态
-    setTimeout(() => {
-      fetchTaskLists();
-    }, 0);
+    fetchTaskLists();
   }, []);
 
   // 当任务ID变化时，重新获取基因列表（仅在需要显示基因选择器时）
@@ -141,8 +124,11 @@ const PageTemplate = ({
     setSelectedTaskId(taskId);
     setTargetGene1(null);
     setTargetGene2(null);
+    // 同时更新sessionStorage
+    sessionStorage.setItem('selectedTaskId', taskId);
     const selectedTask = taskNumberList.find(t => t.task_id === taskId);
     if (selectedTask) {
+      sessionStorage.setItem('selectedTaskNumber', selectedTask.task_number);
       message.success(`已切换到任务: ${selectedTask.task_number}`);
     }
   };

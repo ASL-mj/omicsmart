@@ -11,6 +11,11 @@ const PlatformDetailPage = () => {
   // 从配置文件中获取平台信息
   const platform = getPlatformConfig(id);
 
+  // 处理关闭按钮 - 返回上一页
+  const handleClose = () => {
+    navigate(-1);
+  };
+
   // 处理进入结果交互分析
   const handleInteractiveAnalysis = () => {
     // 根据平台ID跳转到对应的结果分析页面
@@ -25,7 +30,7 @@ const PlatformDetailPage = () => {
   return (
     <div className={styles.platformDetailPage}>
       <Card className={styles.platformDetailCard} bordered={false}>
-        <CloseOutlined className={styles.closeIcon} />
+        <CloseOutlined className={styles.closeIcon} onClick={handleClose} />
         
         <div className={styles.introduce}>
           {/* 左侧：Logo容器 (40%) - 通过renderLogo自定义 */}
