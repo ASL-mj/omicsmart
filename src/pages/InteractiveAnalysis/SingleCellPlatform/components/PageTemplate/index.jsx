@@ -26,7 +26,8 @@ const PageTemplate = ({
   });
 
   const onInteractiveAnalysis = () => {
-    message.info('开始交互分析 - 目标细胞集筛选');
+    // 跳转到新建任务页面
+    window.location.hash = '#create-task';
   };
 
   // 处理查询按钮点击

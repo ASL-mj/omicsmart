@@ -94,6 +94,7 @@ const SingleCellPlatform = () => {
       'group-diff-task': Pages.GroupDiffTask,
       'graph-comparison': Pages.GraphComparison,
       'task-overview': Pages.TaskOverview,
+      'create-task': Pages.CreateTask,
       'analysis-report': Pages.AnalysisReport,
       'custom-color-scheme': Pages.CustomColorScheme,
       'my-classroom': Pages.MyClassroom,

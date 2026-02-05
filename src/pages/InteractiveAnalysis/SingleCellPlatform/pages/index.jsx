@@ -25,6 +25,7 @@ export { default as LigandReceptorLevelDiff } from './CellCommunicationAnalysis/
 export { default as LigandReceptorPairAnalysis } from './CellCommunicationAnalysis/LigandReceptorPairAnalysis';
 export { default as AnalysisReport } from './AnalysisReport';
 export { default as TaskOverview } from './TaskOverview';
+export { default as CreateTask } from './TaskOverview/CreateTask';
 export { default as GeneQuerySubgroup } from './GeneQuery/SubgroupTask';
 export { default as GeneQueryGroupDiff } from './GeneQuery/GroupDiffTask';
 export { default as GeneSetAssessment } from './GeneSetScoringAnalysis/GeneSetAssessment';

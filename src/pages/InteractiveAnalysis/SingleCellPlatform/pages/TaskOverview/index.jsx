@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Space, Tag, message, Popconfirm, Tooltip } from 'antd';
-import { EyeOutlined, DownloadOutlined, DeleteOutlined, ReloadOutlined } from '@ant-design/icons';
+import { EyeOutlined, DownloadOutlined, DeleteOutlined, ReloadOutlined, PlusOutlined } from '@ant-design/icons';
 import PageTemplate from '../../components/PageTemplate/index.jsx';
 import { TaskApi } from '@/utils/api';
 import styles from './index.module.css';
@@ -377,6 +377,11 @@ const TaskOverview = () => {
     setPagination(newPagination);
   };
 
+  // 跳转到新建任务页面
+  const handleCreateTask = () => {
+    window.location.hash = '#create-task';
+  };
+
   return (
     <PageTemplate 
       pageTitle="任务总览"
@@ -388,6 +393,12 @@ const TaskOverview = () => {
           <Space>
             <Button
               type="primary"
+              icon={<PlusOutlined />}
+              onClick={handleCreateTask}
+            >
+              新建任务
+            </Button>
+            <Button
               icon={<ReloadOutlined />}
               onClick={fetchTaskList}
               loading={loading}

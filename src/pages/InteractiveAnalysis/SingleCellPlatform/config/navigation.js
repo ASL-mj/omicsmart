@@ -459,6 +459,13 @@ export const navigationConfig = [
     path: '/task-overview',
   },
   {
+    key: 'create-task',
+    label: '新建任务',
+    path: '/create-task',
+    hideInMenu: true, // 不在菜单和顶部导航中显示
+    parentKey: 'task-overview', // 指定父级菜单项，用于侧边栏高亮
+  },
+  {
     key: 'analysis-report',
     label: '分析报告',
     path: '/analysis-report',

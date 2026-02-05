@@ -3,7 +3,6 @@ import { Layout, Menu, Input, Tabs, Button } from 'antd';
 import { SearchOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { 
   navigationConfig, 
-  getFirstLevelNavigation, 
   searchNavigation 
 } from '../config/navigation';
 import styles from './index.module.css';
@@ -24,7 +23,7 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
       for (const node of nodes) {
         const currentPath = [...path, node];
         if (node.key === key) {
-          return currentPath;
+          return { path: currentPath, node };
         }
         if (node.children) {
           const found = findNavPath(key, node.children, currentPath);
@@ -34,17 +33,31 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
       return null;
     };
     
-    const path = findNavPath(selectedKey) || [navigationConfig[0]];
-    const firstLevel = path[0];
+    const result = findNavPath(selectedKey);
+    const path = result?.path || [navigationConfig[0]];
+    const currentNode = result?.node;
+    
+    // 如果当前节点有 parentKey，使用 parentKey 来确定一级菜单高亮
+    let firstLevel = path[0];
+    if (currentNode?.parentKey) {
+      const parentResult = findNavPath(currentNode.parentKey);
+      if (parentResult) {
+        firstLevel = parentResult.path[0];
+      }
+    }
+    
     const secondLevel = path[1];
     const thirdLevel = path[2];
     
     return {
       path,
+      node: currentNode,
       firstLevel,
       secondLevel,
       thirdLevel,
       level: path.length,
+      hideInMenu: currentNode?.hideInMenu || false,
+      parentKey: currentNode?.parentKey,
     };
   }, [selectedKey]);
 
@@ -116,11 +129,13 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
       
       return buildSearchMenu(searchResults);
     } else {
-      // 正常模式：只显示一级导航
-      return getFirstLevelNavigation().map(item => ({
-        key: item.key,
-        label: item.label,
-      }));
+      // 正常模式：只显示一级导航，过滤掉hideInMenu的项目
+      return navigationConfig
+        .filter(item => !item.hideInMenu)
+        .map(item => ({
+          key: item.key,
+          label: item.label,
+        }));
     }
   }, [searchResults]);
 
@@ -296,8 +311,8 @@ const SingleCellLayout = ({ children, currentPageKey, onPageChange }) => {
         {/* 右侧主内容区 */}
         <Layout className={styles.mainContent} >
           <Content className={styles.contentWrapper}>
-            {/* 顶部二级三级导航Tab */}
-            {topTabItems.length > 0 && (
+            {/* 顶部二级三级导航Tab - 如果当前页面设置了hideInMenu则不显示 */}
+            {!currentNavInfo.hideInMenu && topTabItems.length > 0 && (
               <div className={styles.topNavigation}>
                 {/* 二级Tab */}
                 <Tabs
