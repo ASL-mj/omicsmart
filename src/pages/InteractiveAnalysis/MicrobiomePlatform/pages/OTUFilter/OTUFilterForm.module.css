@@ -1,0 +1,60 @@
+.formContainer {
+  background: #fff;
+  padding: 24px;
+  border-radius: 4px;
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.formSection {
+  background: #f5f7fa;
+  padding: 24px;
+  border-radius: 4px;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  background: #e8f4ff;
+  border-left: 3px solid #1890ff;
+}
+
+.formItem {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.label {
+  min-width: 80px;
+}
+
+.helpIcon {
+  color: #999;
+  cursor: help;
+  font-size: 14px;
+}
+
+.subFormItem {
+  margin-left: 24px;
+  margin-top: 12px;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 16px 0;
+}

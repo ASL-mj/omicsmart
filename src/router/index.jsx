@@ -3,6 +3,7 @@ import MainLayout from '../layouts/MainLayout';
 import AnalysisPlatformPage from '../pages/AnalysisPlatformPage';
 import PlatformDetailPage from '../pages/AnalysisPlatform';
 import SingleCellInteractiveAnalysis from '../pages/InteractiveAnalysis/SingleCellPlatform/index.jsx';
+import MicrobiomeInteractiveAnalysis from '../pages/InteractiveAnalysis/MicrobiomePlatform/index.jsx'
 
 
 
@@ -86,7 +87,11 @@ export const routes = [
   },
   // 结果交互分析页面 - 独立路由，不使用MainLayout
   {
-    path: '/interactive-analysis/single-cell',
+    path: '/interactive-analysis/single-cell/*',
     element: <SingleCellInteractiveAnalysis />,
+  },
+  {
+    path: '/interactive-analysis/microbiome/*',
+    element: <MicrobiomeInteractiveAnalysis />,
   },
 ];

@@ -1,6 +1,7 @@
 import { Card, Row, Col, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import styles from './index.module.css';
+import { color } from 'echarts';
 
 const AnalysisPlatformPage = () => {
   // 基础分析平台数据
@@ -20,6 +21,14 @@ const AnalysisPlatformPage = () => {
       icon: '🧬',
       color: '#1890ff',
       cloudTag: '进入云端版',
+    },
+    {
+      id:3,
+      name: '微生物多样性平台【全新版本】',
+      tag: '16S/ITS测序低至64元/样',
+      icon: "🦠",
+      color:'#',
+      cloudTag: '进入云端版'
     },
   ];
 

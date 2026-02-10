@@ -1,10 +1,12 @@
 import { singleCellPlatformConfig } from './SingleCellPlatform';
 import { transcriptomePlatformConfig } from './TranscriptomePlatform';
+import { MicrobiomePlatform } from './MicrobiomePlatform'
 
 // 平台配置映射表
 export const platformConfigs = {
   '1': singleCellPlatformConfig,
   '2': transcriptomePlatformConfig,
+  '3': MicrobiomePlatform,
   // 后续添加新平台时，在这里导入并添加配置即可
   // '3': xxxPlatformConfig,
 };

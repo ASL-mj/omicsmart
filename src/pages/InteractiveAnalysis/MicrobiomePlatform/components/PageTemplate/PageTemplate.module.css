@@ -1,0 +1,33 @@
+.pageTemplate {
+  padding: 0;
+  width: 100%;
+}
+
+.headerWithButtons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.pageTitle {
+  flex: 1;
+  display: flex;
+}
+
+.pageTitle h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.buttonGroup {
+  flex-shrink: 0;
+  margin-left: 20px;
+}
+
+.content {
+  width: 100%;
+}

@@ -10,11 +10,13 @@ const CreateTask = () => {
   const [activeTab, setActiveTab] = useState('process');
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  
+
   // 拟时分析的子Tab
   const [pseudotimeSubTab, setPseudotimeSubTab] = useState('basic');
   // 基因集打分的子Tab
   const [scoringSubTab, setScoringSubTab] = useState('basic');
+  // 特殊基因集列表
+  const [specialGeneSets, setSpecialGeneSets] = useState([{ id: Date.now() }]);
 
   // 提交表单
   const handleSubmit = async (values) => {
@@ -22,13 +24,13 @@ const CreateTask = () => {
     try {
       // TODO: 调用创建任务API
       console.log('创建任务参数:', { taskType: activeTab, pseudotimeSubTab, ...values });
-      
+
       // 模拟API调用
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
+
       message.success('任务创建成功');
       form.resetFields();
-      
+
       // 返回任务列表页面
       setTimeout(() => {
         window.location.hash = '#task-overview';
@@ -172,13 +174,13 @@ const CreateTask = () => {
 
           {/* 亚群marker基因分析 */}
           <Form.Item name="markerChecked" valuePropName="checked" noStyle>
-          <Checkbox>亚群marker基因分析</Checkbox>
+            <Checkbox>亚群marker基因分析</Checkbox>
           </Form.Item>
 
           {/* 亚群上调基因分析 - 带条件渲染 */}
           <Form.Item
             noStyle
-            shouldUpdate={(prevValues, currentValues) => 
+            shouldUpdate={(prevValues, currentValues) =>
               prevValues.upregulatedChecked !== currentValues.upregulatedChecked
             }
           >
@@ -248,17 +250,17 @@ const CreateTask = () => {
 
           {/* 细胞频率差异选项 */}
           <Form.Item name="frequencyChecked" valuePropName="checked" initialValue={true} noStyle>
-          <Checkbox disabled checked>细胞频率差异</Checkbox>
+            <Checkbox disabled checked>细胞频率差异</Checkbox>
           </Form.Item>
         </Space>
       </div>
 
-          {/* 底部提交栏 */}
+      {/* 底部提交栏 */}
       <div className={styles.submitSection}>
         <Space size="middle" align="center">
           <span className={styles.paramLabel}>任务编号</span>
-          <Form.Item 
-            name="taskNumber" 
+          <Form.Item
+            name="taskNumber"
             rules={[{ required: true, message: '请输入任务编号' }]}
             noStyle
           >
@@ -292,6 +294,18 @@ const CreateTask = () => {
       <Row gutter={16}>
         <Col span={6}>
           <Form.Item
+            label="目标细胞集"
+            name="targetCellSet"
+            rules={[{ required: true, message: '请选择目标细胞集' }]}
+          >
+            <Select placeholder="请选择要重新分析的细胞数据集">
+              <Option value="cellset1">细胞集1</Option>
+              <Option value="cellset2">细胞集2</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={6}>
+          <Form.Item
             label="分组方案"
             name="groupScheme"
             rules={[{ required: true, message: '请选择分组方案' }]}
@@ -300,18 +314,6 @@ const CreateTask = () => {
               <Option value="control_vs_treatment">对照 vs 处理</Option>
               <Option value="time_series">时间序列</Option>
               <Option value="custom">自定义分组</Option>
-            </Select>
-          </Form.Item>
-        </Col>
-        <Col span={6}>
-          <Form.Item
-            label="目标细胞集"
-            name="targetCellSet"
-            rules={[{ required: true, message: '请选择目标细胞集' }]}
-          >
-            <Select placeholder="请选择要重新分析的细胞数据集">
-              <Option value="cellset1">细胞集1</Option>
-              <Option value="cellset2">细胞集2</Option>
             </Select>
           </Form.Item>
         </Col>
@@ -328,7 +330,7 @@ const CreateTask = () => {
           {/* 细胞亚群分类分析 */}
           <Form.Item
             noStyle
-            shouldUpdate={(prevValues, currentValues) => 
+            shouldUpdate={(prevValues, currentValues) =>
               prevValues.subgroupChecked !== currentValues.subgroupChecked
             }
           >
@@ -429,8 +431,8 @@ const CreateTask = () => {
       <div className={styles.submitSection}>
         <Space size="middle" align="center">
           <span className={styles.paramLabel}>任务编号</span>
-          <Form.Item 
-            name="taskNumber" 
+          <Form.Item
+            name="taskNumber"
             rules={[{ required: true, message: '请输入任务编号' }]}
             noStyle
           >
@@ -489,39 +491,25 @@ const CreateTask = () => {
           </Space>
         </Radio.Group>
       </Form.Item>
-
-      <Form.Item
-        label="数据库选择"
-        name="database"
-      >
-        <Select placeholder="请选择参考数据库">
-          <Option value="existing">已有参考数据库</Option>
-          <Option value="custom">自定义数据库</Option>
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="物种类型"
-        name="species"
-      >
-        <Select placeholder="请选择物种类型">
-          <Option value="human">人类</Option>
-          <Option value="mouse">小鼠</Option>
-          <Option value="other">其他</Option>
-        </Select>
-      </Form.Item>
-
-      <Form.Item
-        label="组织类型"
-        name="tissueType"
-      >
-        <Select placeholder="请选择组织类型">
-          <Option value="pbmc">PBMC</Option>
-          <Option value="brain">脑组织</Option>
-          <Option value="liver">肝脏</Option>
-          <Option value="other">其他</Option>
-        </Select>
-      </Form.Item>
+      <Row gutter={12}>
+        <Col span={3}>
+        <span>数据库选择  已有参考</span></Col>
+        <Col span={3}>
+          <Select placeholder="请选择物种类型">
+            <Option value="human">人类</Option>
+            <Option value="mouse">小鼠</Option>
+            <Option value="other">其他</Option>
+          </Select>
+        </Col>
+        <Col span={6}>
+            <Select placeholder="请选择组织类型">
+              <Option value="pbmc">PBMC</Option>
+              <Option value="brain">脑组织</Option>
+              <Option value="liver">肝脏</Option>
+              <Option value="other">其他</Option>
+            </Select>
+          </Col>
+        </Row>
 
       {renderFormButtons()}
     </Form>
@@ -677,13 +665,13 @@ const CreateTask = () => {
       </Form.Item>
 
       <Form.Item
-        label="自定义分析内容"
+        label="分析项目"
         name="customAnalysis"
         tooltip="此模式允许用户自定义分析内容，可通过脚本或高级参数设置"
       >
-        <TextArea 
-          rows={6} 
-          placeholder="请输入自定义分析脚本或参数配置"
+        <TextArea
+          rows={6}
+          placeholder=""
         />
       </Form.Item>
 
@@ -954,18 +942,16 @@ const CreateTask = () => {
       >
         <Space direction="vertical" style={{ width: '100%' }}>
           <Space>
-            <Form.Item name="pseudoValue" label="伪值" initialValue={0.0001} noStyle>
+            <Form.Item label="伪值" name="pseudoValue" initialValue={0.0001} >
               <InputNumber min={0} step={0.0001} style={{ width: 120 }} />
             </Form.Item>
-            <Form.Item name="log2FC" label="log2FC" initialValue={0.36} noStyle>
+            <Form.Item name="log2FC" label="log2FC" initialValue={0.36} >
               <InputNumber min={0} step={0.01} style={{ width: 120 }} />
             </Form.Item>
-          </Space>
-          <Space>
-            <Form.Item name="pValue" label="P值" initialValue={0.05} noStyle>
+            <Form.Item name="pValue" label="P值" initialValue={0.05} >
               <InputNumber min={0} max={1} step={0.01} style={{ width: 120 }} />
             </Form.Item>
-            <Form.Item name="minPct" label="min.pct" initialValue={0.1} noStyle>
+            <Form.Item name="minPct" label="min.pct" initialValue={0.1} >
               <InputNumber min={0} max={1} step={0.01} style={{ width: 120 }} />
             </Form.Item>
           </Space>
@@ -985,6 +971,78 @@ const CreateTask = () => {
             <Checkbox value="gsea">GSEA分析</Checkbox>
           </Space>
         </Checkbox.Group>
+      </Form.Item>
+
+      {/* GSEA分析展开字段 */}
+      <Form.Item
+        noStyle
+        shouldUpdate={(prevValues, currentValues) =>
+          prevValues.downstreamAnalysis !== currentValues.downstreamAnalysis
+        }
+      >
+        {({ getFieldValue }) => {
+          const downstreamAnalysis = getFieldValue('downstreamAnalysis') || [];
+          const gseaChecked = downstreamAnalysis.includes('gsea');
+          
+          return gseaChecked ? (
+            <div style={{ marginLeft: 24, marginTop: 12, padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+              <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                <Row gutter={16} align="middle">
+                  <Col span={4}>
+                    <span className={styles.paramLabel}>分析数据</span>
+                  </Col>
+                  <Col span={8}>
+                    <Form.Item name="gseaAnalysisData" noStyle initialValue="gene_id">
+                      <Select placeholder="请选择">
+                        <Option value="gene_id">Gene_ID</Option>
+                        <Option value="gene_symbol">Gene_Symbol</Option>
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <Row gutter={16} align="middle">
+                  <Col span={4}>
+                    <span className={styles.paramLabel}>数据库</span>
+                  </Col>
+                  <Col span={20}>
+                    <Form.Item name="gseaDatabase" noStyle>
+                      <Checkbox.Group>
+                        <Space size="middle">
+                          <Checkbox value="all">全选</Checkbox>
+                          <Checkbox value="go">GO</Checkbox>
+                          <Checkbox value="kegg">KEGG</Checkbox>
+                        </Space>
+                      </Checkbox.Group>
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <Row gutter={16} align="middle">
+                  <Col span={4}>
+                    <span className={styles.paramLabel}>基因集的范围</span>
+                  </Col>
+                  <Col span={20}>
+                    <Space size="middle">
+                      <Space size="small">
+                        <span>最小值:</span>
+                        <Form.Item name="gseaMinGeneSet" noStyle initialValue={15}>
+                          <InputNumber min={1} max={1000} style={{ width: 100 }} />
+                        </Form.Item>
+                      </Space>
+                      <Space size="small">
+                        <span>最大值:</span>
+                        <Form.Item name="gseaMaxGeneSet" noStyle initialValue={500}>
+                          <InputNumber min={1} max={10000} style={{ width: 100 }} />
+                        </Form.Item>
+                      </Space>
+                    </Space>
+                  </Col>
+                </Row>
+              </Space>
+            </div>
+          ) : null;
+        }}
       </Form.Item>
 
       <Form.Item
@@ -1075,7 +1133,7 @@ const CreateTask = () => {
           {/* 细胞亚群分类分析 */}
           <Form.Item
             noStyle
-            shouldUpdate={(prevValues, currentValues) => 
+            shouldUpdate={(prevValues, currentValues) =>
               prevValues.subgroupChecked !== currentValues.subgroupChecked
             }
           >
@@ -1152,8 +1210,8 @@ const CreateTask = () => {
       <div className={styles.submitSection}>
         <Space size="middle" align="center">
           <span className={styles.paramLabel}>任务编号</span>
-          <Form.Item 
-            name="taskNumber" 
+          <Form.Item
+            name="taskNumber"
             rules={[{ required: true, message: '请输入任务编号' }]}
             noStyle
           >
@@ -1179,6 +1237,7 @@ const CreateTask = () => {
         onFinish={handleSubmit}
         className={styles.form}
       >
+        {/* 1. 细胞集 */}
         <Form.Item
           label="细胞集"
           name="cellSet"
@@ -1191,6 +1250,7 @@ const CreateTask = () => {
           </Select>
         </Form.Item>
 
+        {/* 2. 分组方案 */}
         <Form.Item
           label="分组方案"
           name="groupScheme"
@@ -1203,75 +1263,170 @@ const CreateTask = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item
-          label="基因集选择"
-          name="geneSetSelection"
-        >
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Checkbox value="target">目标基因集</Checkbox>
-            <Checkbox value="upload">文件上传</Checkbox>
+        {/* 3. 基因集选择 */}
+        <Form.Item label="基因集选择" tooltip="选择基因集来源">
+          <Space direction="vertical" style={{ width: '100%' }} size="large">
+            {/* 特殊基因集 */}
+            <div>
+              <Space direction="vertical" style={{ width: '100%' }} size="small">
+                {specialGeneSets.map((geneSet, index) => (
+                  <Space key={geneSet.id} align="start">
+                    {index === 0 && (
+                      <Form.Item name="specialGeneSetChecked" valuePropName="checked" noStyle>
+                        <Checkbox>特殊基因集</Checkbox>
+                      </Form.Item>
+                    )}
+                    {index > 0 && <div style={{ width: 88 }} />}
+                    <Form.Item name={`specialGeneSetType_${geneSet.id}`} noStyle>
+                      <Select placeholder="请选择" style={{ width: 120 }}>
+                        <Option value="type1">类型1</Option>
+                        <Option value="type2">类型2</Option>
+                      </Select>
+                    </Form.Item>
+                    <Form.Item name={`specialGeneSetSubType_${geneSet.id}`} noStyle>
+                      <Select placeholder="请选择" style={{ width: 120 }}>
+                        <Option value="subtype1">子类型1</Option>
+                        <Option value="subtype2">子类型2</Option>
+                      </Select>
+                    </Form.Item>
+                    <Form.Item name={`specialGeneSetInput_${geneSet.id}`} noStyle>
+                      <Input placeholder="请输入或选择" style={{ width: 150 }} />
+                    </Form.Item>
+                    <Button 
+                      danger 
+                      onClick={() => {
+                        if (specialGeneSets.length > 1) {
+                          setSpecialGeneSets(specialGeneSets.filter(item => item.id !== geneSet.id));
+                        }
+                      }}
+                      disabled={specialGeneSets.length === 1}
+                    >
+                      -
+                    </Button>
+                    {index === 0 && (
+                      <>
+                        <Button 
+                          type="primary"
+                          onClick={() => {
+                            setSpecialGeneSets([...specialGeneSets, { id: Date.now() }]);
+                          }}
+                        >
+                          +
+                        </Button>
+                        <Button type="link">数据库介绍</Button>
+                      </>
+                    )}
+                  </Space>
+                ))}
+              </Space>
+            </div>
+
+            {/* 目标基因集 */}
+            <div>
+              <Space align="center">
+                <Form.Item name="targetGeneSetChecked" valuePropName="checked" noStyle>
+                  <Checkbox>目标基因集</Checkbox>
+                </Form.Item>
+                <Form.Item name="targetGeneSetSelection" noStyle>
+                  <Select placeholder="请选择" style={{ width: 300 }}>
+                    <Option value="geneset1">基因集1</Option>
+                    <Option value="geneset2">基因集2</Option>
+                  </Select>
+                </Form.Item>
+              </Space>
+            </div>
+
+            {/* 文件上传 */}
+            <div>
+              <Space align="center">
+                <Form.Item name="fileUploadChecked" valuePropName="checked" noStyle>
+                  <Checkbox>文件上传</Checkbox>
+                </Form.Item>
+                <Form.Item name="uploadedFile" noStyle>
+                  <Select placeholder="请选择" style={{ width: 200 }}>
+                    <Option value="file1">文件1</Option>
+                    <Option value="file2">文件2</Option>
+                  </Select>
+                </Form.Item>
+                <Button style={{ backgroundColor: '#f0ad4e', color: 'white', borderColor: '#f0ad4e' }}>
+                  上传文件
+                </Button>
+                <Button type="primary">查看文件</Button>
+                <Button danger>删除文件</Button>
+              </Space>
+            </div>
           </Space>
         </Form.Item>
 
-        <Form.Item
-          label="软件选择"
-          name="software"
-        >
-          <Checkbox.Group>
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <Checkbox value="mean">mean</Checkbox>
-              <Checkbox value="seurat">seurat</Checkbox>
-              <Checkbox value="aucell">AUCell</Checkbox>
-            </Space>
-          </Checkbox.Group>
+        {/* 4. 软件选择 */}
+        <Form.Item label="软件选择">
+          <Space align="center" size="large">
+            <Form.Item name="softwareMean" valuePropName="checked" noStyle>
+              <Checkbox>mean</Checkbox>
+            </Form.Item>
+            <Form.Item name="softwareSeurat" valuePropName="checked" noStyle>
+              <Checkbox>seurat</Checkbox>
+            </Form.Item>
+            <Form.Item name="softwareAUCell" valuePropName="checked" noStyle>
+              <Checkbox>AUCell</Checkbox>
+            </Form.Item>
+            <span>Top基因比例(AUCell)</span>
+            <Form.Item name="topGeneRatio" initialValue={0.05} noStyle>
+              <InputNumber min={0} max={1} step={0.01} style={{ width: 100 }} />
+            </Form.Item>
+            <Button type="link" icon={<span>?</span>} style={{ padding: 0 }} />
+          </Space>
         </Form.Item>
 
-        <Form.Item
-          label="Top基因比例(AUCell)"
-          name="topGeneRatio"
-          initialValue={0.05}
-        >
-          <InputNumber min={0} max={1} step={0.01} style={{ width: '100%' }} />
+        {/* 5. 基因集相关性阈值选择 */}
+        <Form.Item label="基因集相关性阈值选择" tooltip="选择基因集相关性阈值">
+          <Form.Item name="correlationThreshold" initialValue="q3q4" noStyle>
+            <Radio.Group>
+              <Space size="large">
+                <Radio value="q3q4">第三四分位数</Radio>
+                <Radio value="median">中位数</Radio>
+                <Radio value="custom">自定义</Radio>
+              </Space>
+            </Radio.Group>
+          </Form.Item>
         </Form.Item>
 
-        <Form.Item
-          label="基因集相关性阈值选择"
-          name="correlationThreshold"
-          initialValue="q3q4"
-        >
-          <Radio.Group>
-            <Space direction="vertical">
-              <Radio value="q3q4">第三四分位数</Radio>
-              <Radio value="median">中位数</Radio>
-              <Radio value="custom">自定义</Radio>
-            </Space>
-          </Radio.Group>
+        {/* 6. 分析项目 */}
+        <Form.Item label="分析项目">
+          <Space size="large">
+            <Form.Item name="analysisClassification" valuePropName="checked" noStyle>
+              <Checkbox>基因集分类</Checkbox>
+            </Form.Item>
+            <Form.Item name="analysisPositiveCell" valuePropName="checked" noStyle>
+              <Checkbox>阳性细胞分析</Checkbox>
+            </Form.Item>
+            <Form.Item name="analysisAssessment" valuePropName="checked" noStyle>
+              <Checkbox>基因集得分评估</Checkbox>
+            </Form.Item>
+            <Form.Item name="analysisDistribution" valuePropName="checked" noStyle>
+              <Checkbox>基因表达分布</Checkbox>
+            </Form.Item>
+            <Form.Item name="analysisScoreDiff" valuePropName="checked" initialValue={true} noStyle>
+              <Checkbox>打分差异</Checkbox>
+            </Form.Item>
+          </Space>
         </Form.Item>
 
-        <Form.Item
-          label="分析项目"
-          name="analysisProjects"
-        >
-          <Checkbox.Group>
-            <Space direction="vertical" style={{ width: '100%' }}>
-              <Checkbox value="classification">基因集分类</Checkbox>
-              <Checkbox value="positive_cell">阳性细胞分析</Checkbox>
-              <Checkbox value="assessment">基因集得分评估</Checkbox>
-              <Checkbox value="distribution">基因表达分布</Checkbox>
-              <Checkbox value="score_diff">打分差异</Checkbox>
-            </Space>
-          </Checkbox.Group>
+        {/* 7. 新任务编号 */}
+        <Form.Item label="新任务编号">
+          <Space>
+            <Form.Item
+              name="newTaskNumber"
+              rules={[{ required: true, message: '请输入新任务编号' }]}
+              noStyle
+            >
+              <Input placeholder="请输入内容" style={{ width: 300 }} />
+            </Form.Item>
+            <Button type="primary" htmlType="submit" loading={loading}>
+              确认并创建
+            </Button>
+          </Space>
         </Form.Item>
-
-        <Form.Item
-          label="新任务编号"
-          name="newTaskNumber"
-          rules={[{ required: true, message: '请输入新任务编号' }]}
-        >
-          <Input placeholder="请输入内容" />
-        </Form.Item>
-
-        {renderFormButtons()}
       </Form>
     );
 
@@ -1372,6 +1527,10 @@ const CreateTask = () => {
       layout="vertical"
       onFinish={handleSubmit}
       className={styles.form}
+      initialValues={{
+        databaseAnalysisChecked: true,
+        tcgaAnalysisChecked: true
+      }}
     >
       <Form.Item
         label="任务编号"
@@ -1401,54 +1560,115 @@ const CreateTask = () => {
         </div>
       </Form.Item>
 
+      {/* 韦恩图分析 - 禁用 */}
       <Form.Item
-        label="韦恩图分析"
         name="vennAnalysis"
         valuePropName="checked"
       >
-        <Checkbox>韦恩图分析（需选择两个及以上基因集；组间差异分析暂不支持）</Checkbox>
+        <Checkbox disabled>
+          韦恩图分析
+          <span style={{ color: '#999', marginLeft: 8, fontSize: '12px' }}>
+            需选择两个或不以上的基因集；组间差异分析任务暂不支持
+          </span>
+        </Checkbox>
       </Form.Item>
 
+      {/* 富集分析 */}
       <Form.Item
-        label="富集分析"
         name="enrichmentAnalysis"
         valuePropName="checked"
       >
         <Checkbox>富集分析</Checkbox>
       </Form.Item>
 
+      {/* 数据库分析 - 默认选中，展开内容 */}
       <Form.Item
-        label="数据库分析"
-        name="databaseAnalysis"
+        noStyle
+        shouldUpdate={(prevValues, currentValues) =>
+          prevValues.databaseAnalysisChecked !== currentValues.databaseAnalysisChecked
+        }
       >
-        <Checkbox.Group>
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Checkbox value="tcga">
-              TCGA分析
-              <span style={{ color: '#ff4d4f', marginLeft: 8, fontSize: '12px' }}>
-                （目标基因集数目需要小于30个）
-              </span>
-            </Checkbox>
-          </Space>
-        </Checkbox.Group>
-      </Form.Item>
+        {({ getFieldValue }) => {
+          const databaseAnalysisChecked = getFieldValue('databaseAnalysisChecked');
+          return (
+            <div>
+              <Form.Item
+                name="databaseAnalysisChecked"
+                valuePropName="checked"
+                initialValue={true}
+              >
+                <Checkbox>数据库分析</Checkbox>
+              </Form.Item>
 
-      <Form.Item
-        label="癌症类型（多选）"
-        name="cancerTypes"
-      >
-        <Checkbox.Group style={{ width: '100%' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
-            <Checkbox value="pan">泛癌（Pan Cancer）</Checkbox>
-            <Checkbox value="paad">胰腺癌（PAAD）</Checkbox>
-            <Checkbox value="luad">肺腺癌（LUAD）</Checkbox>
-            <Checkbox value="brca">乳腺癌（BRCA）</Checkbox>
-            <Checkbox value="coad">结肠癌（COAD）</Checkbox>
-            <Checkbox value="stad">胃癌（STAD）</Checkbox>
-            <Checkbox value="lihc">肝癌（LIHC）</Checkbox>
-            <Checkbox value="ucec">子宫内膜癌（UCEC）</Checkbox>
-          </div>
-        </Checkbox.Group>
+              {databaseAnalysisChecked && (
+                <div style={{ marginLeft: 24, marginTop: 12, padding: '16px', background: '#fafafa', borderRadius: '4px' }}>
+                  <Space direction="vertical" style={{ width: '100%' }} size="middle">
+                    {/* TCGA分析 */}
+                    <Form.Item
+                      name="tcgaAnalysisChecked"
+                      valuePropName="checked"
+                      initialValue={true}
+                      noStyle
+                    >
+                      <Checkbox>
+                        TCGA分析
+                        <span style={{ color: '#ff4d4f', marginLeft: 8, fontSize: '12px' }}>
+                          目标基因集数目需要小于30个
+                        </span>
+                      </Checkbox>
+                    </Form.Item>
+
+                    {/* 癌症类型 */}
+                    <div>
+                      <div style={{ marginBottom: 8, fontWeight: 500 }}>癌症类型</div>
+                      <Form.Item name="cancerTypes" noStyle>
+                        <Checkbox.Group style={{ width: '100%' }}>
+                          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px' }}>
+                            <Checkbox value="all">全选</Checkbox>
+                            <Checkbox value="acc">肾上腺皮质癌（ACC）</Checkbox>
+                            <Checkbox value="pan">泛癌（Pan Cancer）</Checkbox>
+                            <Checkbox value="brca">乳腺浸润癌（BRCA）</Checkbox>
+                            <Checkbox value="blca">膀胱尿路上皮癌（BLCA）</Checkbox>
+                            <Checkbox value="chol">胆管癌（CHOL）</Checkbox>
+                            <Checkbox value="cesc">宫颈鳞状细胞癌和宫颈内腺癌（CESC）</Checkbox>
+                            <Checkbox value="dlbc">弥漫性大B细胞淋巴瘤（DLBC）</Checkbox>
+                            <Checkbox value="coad">结肠癌（COAD）</Checkbox>
+                            <Checkbox value="gbm">多形性胶质母细胞瘤（GBM）</Checkbox>
+                            <Checkbox value="esca">食管癌（ESCA）</Checkbox>
+                            <Checkbox value="kich">肾嫌色细胞癌（KICH）</Checkbox>
+                            <Checkbox value="hnsc">头颈部鳞状细胞癌（HNSC）</Checkbox>
+                            <Checkbox value="kirp">肾乳头状细胞癌（KIRP）</Checkbox>
+                            <Checkbox value="kirc">肾透明细胞癌（KIRC）</Checkbox>
+                            <Checkbox value="lgg">脑低级别胶质瘤（LGG）</Checkbox>
+                            <Checkbox value="laml">急性髓系白血病（LAML）</Checkbox>
+                            <Checkbox value="luad">肺腺癌（LUAD）</Checkbox>
+                            <Checkbox value="lihc">肝癌（LIHC）</Checkbox>
+                            <Checkbox value="meso">间皮瘤（MESO）</Checkbox>
+                            <Checkbox value="lusc">肺鳞状细胞癌（LUSC）</Checkbox>
+                            <Checkbox value="paad">胰腺癌（PAAD）</Checkbox>
+                            <Checkbox value="ov">卵巢浆液性囊腺癌（OV）</Checkbox>
+                            <Checkbox value="prad">前列腺癌（PRAD）</Checkbox>
+                            <Checkbox value="pcpg">嗜铬细胞瘤和副神经节瘤（PCPG）</Checkbox>
+                            <Checkbox value="sarc">肉瘤（SARC）</Checkbox>
+                            <Checkbox value="read">直肠癌（READ）</Checkbox>
+                            <Checkbox value="stad">胃腺癌（STAD）</Checkbox>
+                            <Checkbox value="skcm">皮肤黑色素瘤（SKCM）</Checkbox>
+                            <Checkbox value="thca">甲状腺癌（THCA）</Checkbox>
+                            <Checkbox value="tgct">睾丸癌（TGCT）</Checkbox>
+                            <Checkbox value="ucec">子宫内膜癌（UCEC）</Checkbox>
+                            <Checkbox value="thym">胸腺癌（THYM）</Checkbox>
+                            <Checkbox value="uvm">葡萄膜黑色素瘤（UVM）</Checkbox>
+                            <Checkbox value="ucs">子宫癌肉瘤（UCS）</Checkbox>
+                          </div>
+                        </Checkbox.Group>
+                      </Form.Item>
+                    </div>
+                  </Space>
+                </div>
+              )}
+            </div>
+          );
+        }}
       </Form.Item>
 
       <Form.Item
@@ -1518,7 +1738,7 @@ const CreateTask = () => {
   ];
 
   return (
-    <PageTemplate 
+    <PageTemplate
       pageTitle="新建任务"
       showButtons={false}
     >

@@ -1,0 +1,114 @@
+.detailContainer {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 4px;
+  min-height: calc(100vh - 200px);
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.section {
+  margin-bottom: 24px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+}
+
+.section :global(.ant-card-body) {
+  padding: 20px;
+}
+
+.sectionTitle {
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.sampleSelection {
+  margin-top: 16px;
+}
+
+.sampleToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #fafafa;
+  border-radius: 4px;
+}
+
+.sampleList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.sampleList :global(.ant-checkbox-wrapper) {
+  margin: 0;
+}
+
+.tableToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #fafafa;
+  border-radius: 4px;
+}
+
+.sampleTable {
+  margin-top: 16px;
+}
+
+.sampleTable :global(.ant-table-thead > tr > th) {
+  background-color: #fafafa;
+  font-weight: 600;
+}
+
+.sampleTable :global(.ant-input) {
+  font-size: 13px;
+}
+
+.comparisonSection {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 24px;
+  border-top: 1px solid #e8e8e8;
+  margin-top: 24px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .detailContainer {
+    padding: 16px;
+  }
+
+  .sampleList {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 8px;
+  }
+
+  .tableToolbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .tableToolbar :global(.ant-input) {
+    width: 100% !important;
+  }
+}

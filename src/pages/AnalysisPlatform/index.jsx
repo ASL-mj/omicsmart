@@ -24,6 +24,8 @@ const PlatformDetailPage = () => {
     } else if (id === '2') {
       // 转录组的结果分析页面（后续添加）
       navigate('/interactive-analysis/transcriptome');
+    } else if (id === '3'){
+      navigate('/interactive-analysis/microbiome')
     }
   };
 

@@ -1,0 +1,133 @@
+.detailContainer {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 4px;
+  min-height: calc(100vh - 200px);
+}
+
+.header {
+  margin-bottom: 16px;
+}
+
+.filterPanel {
+  background-color: #fafafa;
+  padding: 20px;
+  border-radius: 4px;
+  border: 1px solid #e8e8e8;
+}
+
+.filterTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #262626;
+}
+
+.filterItem {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.filterItem:last-child {
+  margin-bottom: 0;
+}
+
+.filterSubItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  margin-left: 24px;
+  flex-wrap: wrap;
+}
+
+.tableSection {
+  margin-top: 24px;
+}
+
+.tableToolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #fafafa;
+  border-radius: 4px;
+}
+
+.tableSection :global(.ant-table) {
+  font-size: 13px;
+}
+
+.tableSection :global(.ant-table-thead > tr > th) {
+  background-color: #fafafa;
+  font-weight: 600;
+  padding: 8px;
+}
+
+.tableSection :global(.ant-table-tbody > tr > td) {
+  padding: 8px;
+}
+
+.tableSection :global(.ant-tag) {
+  font-size: 12px;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  padding-top: 24px;
+  margin-top: 24px;
+  border-top: 1px solid #e8e8e8;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .tableToolbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .filterSubItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .detailContainer {
+    padding: 16px;
+  }
+
+  .filterPanel {
+    padding: 16px;
+  }
+
+  .filterItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filterSubItem {
+    margin-left: 0;
+  }
+
+  .tableToolbar :global(.ant-space) {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .tableToolbar :global(.ant-input) {
+    width: 100% !important;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
